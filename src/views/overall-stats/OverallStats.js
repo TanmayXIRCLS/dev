@@ -170,10 +170,11 @@ const OverallStats = () => {
             <div className=" d-flex justify-content-evenly align-items-center flex-wrap">
               <div className="me-2">
                 <select id="campaignSelect" value={campaignOption} onChange={handleCampaignChange} style={{ margin: "0", border: "transparent", background: "transparent", fontSize: "1rem", fontWeight: "450", color: "#82868b" }}>
-                  <option className="text-secondary" value="All Campaigns">All Campaigns</option>
-                  <option value="Campaign 1">Campaign 1</option>
-                  <option value="Campaign 2">Campaign 2</option>
-                  <option value="Campaign 2">Campaign 3</option>
+                  {
+                    campaignOptions.map(ele => (
+                      <option value="{ele}">{ele}</option>
+                    ))
+                  }
                 </select>
                 <ul className="dropdown-menu">
                   {campaignOptions.map((ele, index) => {
@@ -237,19 +238,13 @@ const OverallStats = () => {
                       >
                         {campaignOption}
                       </button> */}
-                          <ul className="dropdown-menu">
-                            {campaignOptions.map((ele, index) => {
-                              return (
-                                <li
-                                  key={index}
-                                  className=" dropdown-item cursor-pointer"
-                                  onClick={() => setCampaignOption(ele)}
-                                >
-                                  {ele}
-                                </li>
-                              )
-                            })}
-                          </ul>
+                          <select id="campaignSelect" value={campaignOption} onChange={handleCampaignChange} style={{ margin: "0", border: "transparent", background: "transparent", fontSize: "1rem", fontWeight: "450", color: "#82868b" }}>
+                            {
+                              campaignOptions.map(ele => (
+                                <option value="{ele}">{ele}</option>
+                              ))
+                            }
+                          </select>
                         </div>
                         <p className=" fs-6 mb-2 opacity-50 mt-3">
                           Scheduled Time: {responseData.data[1]?.fields?.campaign_details?.schedule_time}

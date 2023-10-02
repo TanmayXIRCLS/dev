@@ -113,8 +113,7 @@ const HorizontalLayout = props => {
   return (
     <div
       className={classnames(
-        `wrapper horizontal-layout horizontal-menu ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${
-          footerClasses[footerType] || 'footer-static'
+        `wrapper horizontal-layout horizontal-menu ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${footerClasses[footerType] || 'footer-static'
         } menu-expanded`
       )}
       {...(isHidden ? { 'data-col': '1-column' } : {})}
@@ -157,7 +156,8 @@ const HorizontalLayout = props => {
               'floating-nav': (!navbarClasses[navbarType] && navbarType !== 'static') || navbarType === 'floating'
             })}
           >
-            {menu ? menu({ menuData, routerProps, currentActiveItem }) : <MenuComponent menuData={menuData} />}
+            {menu ? menu({ menuData, }) : <MenuComponent menuData={menuData} />}
+            {/* routerProps, currentActiveItem */}
           </Navbar>
         </div>
       ) : null}

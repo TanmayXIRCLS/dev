@@ -25,9 +25,28 @@ const statusObj = {
     published: 'light-success'
 }
 
+const handleAuthorizeReview = async (review_id) => {
+    console.log("review_id", review_id)
+    try {
+        const response = await fetch(
+            `https://d550-110-226-182-52.ngrok-free.app/review/authorize/${review_id}/`,
+            {
+                method: "POST",
+            }
+        );
+        // window.location.reload(true)
+        if (!response.ok) {
+            throw new Error(`Authorization failed due to:${response.status} `);
+        }
+        console.log("Authorization successful!");
+    } catch (error) {
+        console.error("Authorizing error: ", error);
+    }
+}
+
 const renderClient = row => {
     if (row.avatar) {
-        return <Avatar alt="Gisela Leppard" src="/static/images/avatar/1.jpg" width='32' height='32' />    
+        return <Avatar alt="Gisela Leppard" src="/static/images/avatar/1.jpg" width='32' height='32' />
         // return <img src={AvatarImg} className='me-1' width='32' height='32'/>
     } else {
         return (
@@ -41,25 +60,23 @@ const renderClient = row => {
     }
 }
 
-export const data = [{ name: 'Gisela Leppard', product: 'Air Jordan', productDesc:'Air Jordan is a line of basketball shoes produced by Nike', status: 'published', reviewer: '909090909', email: 'gleppard8@yandex.ru', date: "27 Apr 2022", review:"Ut mauris", reviewdesc:"Fusce consequat. Nulla nisl. Nunc nisl." }]
-
 export const Column = [
     {
         name: <span className='fw-bold h5'>PRODUCT</span>,
-        width: '25rem',
+        width: '20rem',
         sortable: true,
         sortField: 'product',
         selector: row => row.product,
         cell: row => (
-            <div className='d-flex justify-content-left align-items-center mt-1'>
-                <img src={ img } alt="" style={{width:'15%', height:"auto"}} />
-                <div className='d-flex flex-column' style={{marginLeft:"7px"}}>
+            <div className=' my-1'>
+                <img src={row.productImg} alt="" style={{ width: '20%', height: "auto" }} />
+                <div  >
                     <Link
                         to={`/apps/user/view/${row.id}`}
                         className='user_name text-truncate text-body'
-                        onClick={() => store.dispatch(getUser(row.id))}
+                    // onClick={() => store.dispatch(getUser(row.id))}
                     >
-                        <span className='fw-medium' style={{fontSize:'14px'}}>{row.product}</span>
+                        <span className='fw-medium' style={{ fontSize: '14px' }}>{row.product}</span>
                     </Link>
                     <small className='text-muted mb-0 w-75'>{row.productDesc}</small>
                 </div>
@@ -68,8 +85,8 @@ export const Column = [
     },
     {
         name: <span className='fw-bold h5'>REVIEWER</span>,
-        minWidth: '15rem',
         sortable: true,
+        width: "16rem",
         sortField: 'reviewer',
         selector: row => row.reviewer,
         cell: row => (
@@ -79,9 +96,9 @@ export const Column = [
                     <Link
                         to={`/apps/user/view/${row.id}`}
                         className='user_name text-truncate text-body'
-                        onClick={() => store.dispatch(getUser(row.id))}
+                    // onClick={() => store.dispatch(getUser(row.id))}
                     >
-                        <span className='fw-medium' style={{fontSize:'14px', color:"#7367f0"}}>{row.name}</span>
+                        <span className='fw-medium' style={{ fontSize: '14px', color: "#7367f0" }}>{row.name}</span>
                     </Link>
                     <small className='text-truncate text-muted mb-0'>{row.email}</small>
                 </div>
@@ -91,28 +108,30 @@ export const Column = [
     },
     {
         name: <span className='fw-bold h5'>REVIEW</span>,
-        minWidth: '20rem',
         sortable: true,
+        sortField: 'rating',
+        // width: '10rem',
         selector: row => row.review,
         cell: row => (
             <div className='d-flex flex-column mt-1'>
-                <div style={{marginBottom:'5px'}}>
-                <FaStar size={21} color='#ff9f43'/>
-                <FaStar size={21} color='#ff9f43'/>
-                <FaStar size={21} color='#4b465c33'/>
-                <FaStar size={21} color='#4b465c33'/>
-                <FaStar size={21} color='#4b465c33'/>
+                <div style={{ marginBottom: '5px' }}>
+                    {Array.from({ length: row.rating }).map((_, index) => (
+                        <FaStar key={index} size={21} color='#ff9f43' />
+                    ))}
+                    {Array.from({ length: 5 - row.rating }).map((_, index) => (
+                        <FaStar key={index} size={21} color='#4b465c33' />
+                    ))}
                 </div>
-                <p className="h6" style={{marginBottom:'5px', fontSize:"14px"}}>{row.review}</p>
-                <small >{row.reviewdesc}</small>
+                <p className="h6" style={{ marginBottom: '5px', fontSize: "14px" }}>{row.review}</p>
+
             </div>
         )
 
     },
     {
         name: <span className='fw-bold h5'>DATE</span>,
-        width: "9rem",
         sortable: true,
+        // width: "15rem",
         selector: row => row.date,
         sortField: 'dater',
         cell: row => (
@@ -121,19 +140,21 @@ export const Column = [
     },
     {
         name: <span className='fw-bold h5'>STATUS</span>,
-        width: "9rem",
         sortable: true,
         sortField: 'status',
         selector: row => row.status,
         cell: row => (
-            <Badge className='text-capitalize' color={statusObj[row.status]} style={{ padding: '7px'}}>
-                {row.status}
-            </Badge>
+            row.status ? (
+                <p className=" text-success" style={{ width: "9rem" }}>Approved</p>
+            ) : (
+                <p className=" text-danger" style={{ width: "9rem" }}>Pending</p>
+            )
         )
     },
     {
         name: <span className='fw-bold h5'>ACTION</span>,
         width: '7rem',
+        height: '7rem',
         cell: row => (
             <div className='column-action'>
                 <UncontrolledDropdown>
@@ -144,23 +165,23 @@ export const Column = [
                         <DropdownItem
                             tag={Link}
                             className='w-100'
-                            to={`/apps/user/view/${row.id}`}
-                            onClick={() => store.dispatch(getUser(row.id))}
+                            to={`/merchant/product-review`}
+                            onClick={() => handleAuthorizeReview(row.id)}
                         >
                             <FileText size={14} className='me-50' />
-                            <span className='align-middle'>Details</span>
+                            <span className='align-middle'>Authorised</span>
                         </DropdownItem>
-                        <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
+                        {/* <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
                             <Archive size={14} className='me-50' />
                             <span className='align-middle'>Edit</span>
-                        </DropdownItem>
+                        </DropdownItem> */}
                         <DropdownItem
                             tag='a'
                             href='/'
                             className='w-100'
                             onClick={e => {
                                 e.preventDefault()
-                                store.dispatch(deleteUser(row.id))
+                                // store.dispatch(deleteUser(row.id))
                             }}
                         >
                             <Trash2 size={14} className='me-50' />

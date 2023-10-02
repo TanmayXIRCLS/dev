@@ -1,0 +1,104 @@
+.Label{
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 25px;
+    row-gap: 25px !important;
+}
+
+.grid-item-FB {
+    border: 1px solid #3b5998; 
+    text-align: center;
+    padding: 0px;
+    border-radius: 4px;
+}
+.grid-item-TW {
+    border: 1px solid #1da1f2; 
+    text-align: center;
+    padding: 0px;
+    border-radius: 4px;
+}
+.grid-item-MG {
+    border: 1px solid #0072d0; 
+    text-align: center;
+    padding: 0px;
+    border-radius: 4px;
+}
+.grid-item-WA {
+    border: 1px solid #25d366; 
+    text-align: center;
+    padding: 0px;
+    border-radius: 4px;
+}
+
+.Iconbg{
+    width: 55px;
+    height: 55px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.btnborder{
+    border:solid 1px rgba(129, 129, 129, 0.365);
+}
+
+.LabelStyle{
+    width: 80px;
+}
+
+.Headborder{
+    border-bottom: solid 1px rgba(128, 128, 128, 0.365);
+}
+
+.BadgeColorRed{
+    background-color: #ffd4d4;
+
+    color: #ff5555d1;
+  }
+
+.BadgeColorYellow{
+    background-color: rgb(255, 236, 206);
+
+    color: rgb(240, 165, 52);
+}
+
+.BadgeColorGreen{
+    background-color: #daffe4;
+
+    color: #1dc246;
+  }
+
+.BadgeColorGrey{
+    background-color: #c5c5c5;
+    border: solid 1px #676767;
+    color: #676767;
+  }
+
+  @media screen and (max-width: 425px) {
+      .sharesFlex{
+        display: flex; 
+        flex-direction: column;
+      }
+  }
+
+.CardHead{
+    color:#292929d7;
+}
+
+.IconIsFlipped{
+    transform: rotate(180deg);
+}
+
+.IconIsNotFlipped{
+    transform: rotate(0deg);
+}
+
+.table-container {
+  max-height: 400px; /* Adjust the height as per your requirement */
+  overflow-y: scroll;
+}

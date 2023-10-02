@@ -4,6 +4,8 @@ import { Fragment, useState } from 'react'
 // ** Table Columns
 import { HostWiseReportColumns } from './SponsoredData'
 
+import { FormGroup } from "react-bootstrap"
+
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
 import { ChevronDown } from 'react-feather'
@@ -40,7 +42,7 @@ export default function HostWiseReportTable() {
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue, setSearchValue] = useState('')
     const [filteredData, setFilteredData] = useState([])
-
+    const ItemsPerPage = 5
 
     // ** Hooks
     const { t } = useTranslation()

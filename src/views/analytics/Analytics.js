@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Col, Row, Card, CardBody, InputGroup, ButtonDropdown, Button, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap'
+import { Col, Row, Card, CardBody } from 'reactstrap'
 import { AiFillStar } from "react-icons/ai"
 import BarChart from './BarChart'
 import "./Analytics.css"

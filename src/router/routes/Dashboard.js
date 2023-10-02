@@ -1,6 +1,5 @@
 import { lazy } from 'react'
 import Demo from '@src/views/dashboard/Demo'
-const Dashboard = lazy(() => import('@src/views/dashboard/Dashboard'))
 import Report from '@src/views/Report/Report'
 import Notification from '@src/views/Notification/Notification'
 import Statistics from '@src/views/Statistics/Statistics'
@@ -30,8 +29,13 @@ import Reports from '@src/views/dashboard/Reports'
 import ReferralsTable from '@src/views/dashboard/ReferralsTable'
 import Analytics2 from '@src/views/dashboard/Analytics'
 // import TotalReach from '@src/views/dashboard/TotalReach'
-
 import { Notify } from '@src/views/Notify/Notify'
+
+import Referral_Analysis from '@src/views/Referral_analysis/Referral_Analysis'
+import Reviews from '@src/views/Manage_Reviews/Reviews'
+import Checkout from '@src/views/Checkout/Checkout'
+
+const Dashboard = lazy(() => import('@src/views/dashboard/Dashboard'))
 
 const Dashboard_Routes = [
   {
@@ -124,27 +128,43 @@ const Dashboard_Routes = [
   },
   {
     path: '/merchant/mapro/',
-    element: <Mapro/>
+    element: <Mapro />
   },
   {
     path: '/merchant/referrals/',
-    element: <Referrals/>
+    element: <Referrals />
   },
   {
     path: '/merchant/analytics/',
-    element: <Analytics/>
+    element: <Analytics />
   },
   {
     path: '/merchant/reports/',
-    element: <Reports/>
+    element: <Reports />
   },
   {
     path: '/merchant/ReferralsTable/',
-    element: <ReferralsTable/>
+    element: <ReferralsTable />
+  },
+  {
+    path: '/merchant/dashboard/notification',
+    element: <Notification />
   },
   {
     path: '/merchant/notify',
     element: <Notify />
+  },
+  {
+    path: '/merchant/referral_analysis',
+    element: <Referral_Analysis />
+  },
+  {
+    path: '/merchant/reviews',
+    element: <Reviews />
+  },
+  {
+    path: '/merchant/checkout',
+    element: <Checkout />
   }
 ]
 

@@ -1,13 +1,15 @@
+import { useState } from 'react'
 import { Col, Row, Card, CardBody, Progress } from 'reactstrap'
 import { FaStar } from 'react-icons/fa'
-import "./ProductReview.css"
+import { Download, Printer, File, FileText, Copy } from 'react-feather'
 import DailyBarGraph from './DailyBarGraph'
 import ProdReviewTable from './ProdReviewTable'
-import { Download, Printer, File, FileText, Copy } from 'react-feather'
+import "./ProductReview.css"
 
 
 const ProductReview = () => {
-
+    const [reviewType, setReviewType] = useState("All")
+    const [reviewsPerPage, setReviewsPerPage] = useState(10)
 
     return (
         <>
@@ -90,23 +92,24 @@ const ProductReview = () => {
             </Row>
             <Row>
                 <Col>
-                    <Card style={{ height: "800px" }}>
+                    <Card>
                         <CardBody className='mt-2' style={{ padding: "0px" }}>
-                            <Row className=' d-flex justify-content-between align-items-center gap-2'>
-                                <Col md="4" sm="8">
+                            <Row className=' d-flex align-items-center'>
+                                <Col md="2" sm="8">
                                     <input className="form-control mr-sm-2 w-auto mx-3" type="search" placeholder="Search Review" aria-label="Search" />
                                 </Col>
-                                <Col className='d-flex gap-1 dropsdown' md="4" sm="8">
-                                    <select className="form-select dropsdown-width" aria-label="Default select example">
+                                <Col className='d-flex justify-content-end align-items-center gap-1 dropsdown ' md="7" sm="8">
+
+                                    {/* <select className="form-select dropsdown-width" aria-label="Default select example">
                                         <option selected value="10">10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
-                                    </select>
-                                    <select className="form-select dropsdown-width" aria-label="Default select example">
-                                        <option selected value="all">All</option>
-                                        <option value="publish">Published</option>
-                                        <option value="pemding">Pending</option>
+                                    </select> */}
+                                    <select className="form-select dropsdown-width" aria-label="Default select example" value={reviewType} onChange={(e) => setReviewType(e.target.value)}>
+                                        <option selected value="All">All</option>
+                                        <option value="Published">Published</option>
+                                        <option value="Pending">Pending</option>
                                     </select>
                                     <div className="dropdown dropsdown-width">
                                         <button className="btn btn-light text-secondary text-center dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -122,7 +125,7 @@ const ProductReview = () => {
                                 </Col>
                             </Row>
                             <hr className='mt-2 mb-0' />
-                            <ProdReviewTable/>
+                            <ProdReviewTable reviewType={reviewType} reviewsPerPage={reviewsPerPage} />
                         </CardBody>
                     </Card>
 

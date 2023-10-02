@@ -26,7 +26,6 @@ export default [
     id: 'Product reviews',
     title: 'Product reviews',
     icon: <TrendingUp size={20} />,
-    navLink: '',
     children: [
 
       {
@@ -40,14 +39,19 @@ export default [
         title: 'Analytics',
         icon: <Circle size={20} />,
         navLink: '/merchant/analytics'
-      }
+      },
+      {
+        id: 'reviews',
+        title: 'Reviews',
+        icon: <Circle size={20} />,
+        navLink: '/merchant/reviews'
+      },
     ]
   },
   {
     id: 'emailStats',
     title: 'Talk by XIRCLS',
     icon: <Airplay size={20} />,
-    navLink: '',
     children: [
       {
         id: 'analytics2',
@@ -286,9 +290,20 @@ export default [
   },
   {
     id: 'notify',
-    title: 'notify',
-    icon: <BarChart2 size={20} />,
+    title: 'Notify',
+    icon: <Circle size={20} />,
     navLink: '/merchant/notify'
+  },
+  {
+    id: 'referral_analysis',
+    title: 'Referral Analysis',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/referral_analysis'
+  },
+  {
+    id: 'checkout',
+    title: 'Checkout',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/checkout'
   }
-
 ]
