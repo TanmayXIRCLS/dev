@@ -9,6 +9,8 @@ import { CgProfile } from "react-icons/cg"
 import "./style/ReviewStyle.css"
 import StarRating from "./StarRating"
 
+import apiData from "@src/@core/auth/api/api.json"
+
 const Reviews = () => {
   const [widgetTabOpen, setWidgetTabOpen] = useState(true)
   const [permissionTabOpen, setPermissionTabOpen] = useState(false)
@@ -121,7 +123,7 @@ const Reviews = () => {
     setAutoApproved(!autoApproved)
     try {
       const response = await fetch(
-        `https://d550-110-226-182-52.ngrok-free.app/toggle-status/`,
+        `${apiData.d_ngrok}/toggle-status/`,
         {
           method: "POST",
         }
@@ -142,7 +144,7 @@ const Reviews = () => {
     form_data.append('minimum_rating', autoPublished)
     try {
       const response = await fetch(
-        `https://d550-110-226-182-52.ngrok-free.app/update-rating/`,
+        `${apiData.d_ngrok}/update-rating/`,
         {
           method: "POST",
           body: form_data
@@ -159,8 +161,8 @@ const Reviews = () => {
   }
 
   useEffect(async () => {
-    const url1 = "https://d550-110-226-182-52.ngrok-free.app/router/current-status/"
-    const url2 = "https://d550-110-226-182-52.ngrok-free.app/router/current-min/"
+    const url1 = `${apiData.d_ngrok}/router/current-status/`
+    const url2 = `${apiData.d_ngrok}/router/current-min/`
 
     const responses = await Promise.all([
       fetch(url1,
@@ -184,6 +186,8 @@ const Reviews = () => {
 
     const autoPublishedData = await responses[1].json()
     setAutoPublished(autoPublishedData[0].minimum_rating)
+    console.table({ autoApprovedData, autoPublishedData })
+
 
   }, [])
 
@@ -383,7 +387,7 @@ const Reviews = () => {
                 />
               </div>
             </div>
-            <div className="row d-flex">
+            <div className={`row d-flex ${autoApproved ? "nonClickableDiv" : ""}`}>
               <div className="col d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1">
                   Auto-publish reviews that are {autoPublished} stars & above
@@ -406,7 +410,7 @@ const Reviews = () => {
               </div>
             </div>
             <div className=" d-flex justify-content-end">
-              <button className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
+              <button className={`btn btn-primary ${autoApproved ? "nonClickableDiv" : ""}`} onClick={() => handleSubmit()}>Save</button>
             </div>
           </CardBody>
         </Card>

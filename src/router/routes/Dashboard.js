@@ -9,6 +9,7 @@ import OverallStats from '@src/views/overall-stats/OverallStats'
 import ConsentStats from '@src/views/consent-stats/ConsentStats'
 import WizardModernVertical from '@src/views/Campaign/Campaign'
 import OffersLog from '@src/views/offers-log/OffersLog'
+import SmsReports from '@src/views/sms-reports/SmsReports'
 
 import SponsorDashboard from '@src/views/SponsorDashboard/SponsorDashboard'
 import HostDashboard from '@src/views/hostDashboard/HostDashboard'
@@ -165,6 +166,10 @@ const Dashboard_Routes = [
   {
     path: '/merchant/checkout',
     element: <Checkout />
+  },
+  {
+    path: '/merchant/sms-reports',
+    element: <SmsReports />
   }
 ]
 

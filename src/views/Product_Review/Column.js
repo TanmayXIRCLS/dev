@@ -20,6 +20,8 @@ import { MoreVertical, FileText, Trash2, Archive } from 'react-feather'
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
+import apiData from "@src/@core/auth/api/api.json"
+
 const statusObj = {
     pending: 'light-warning',
     published: 'light-success'
@@ -29,7 +31,7 @@ const handleAuthorizeReview = async (review_id) => {
     console.log("review_id", review_id)
     try {
         const response = await fetch(
-            `https://d550-110-226-182-52.ngrok-free.app/review/authorize/${review_id}/`,
+            `${apiData.d_ngrok}/review/authorize/${review_id}/`,
             {
                 method: "POST",
             }

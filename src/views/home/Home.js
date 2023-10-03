@@ -10,9 +10,11 @@ import Section6 from './components/section6/Section6'
 import Section7 from './components/section7/Section7'
 import Footer from './components/footer/Footer'
 
+import "./home.css"
+
 const Home = () => {
   return (
-    <div style={{ background: "#fff" }}>
+    <div className='HomePage' style={{ background: "#fff" }}>
       <Navbar />
       <Hero />
       <Section1 />
@@ -22,7 +24,7 @@ const Home = () => {
       <Section5 />
       <Section6 />
       <Section7 />
-      <hr align="center" style={{ width: "75%" }} />
+      <hr className='w-75 m-auto' />
       <Footer />
     </div>
   )

@@ -4,6 +4,7 @@ import EmailVerify from '@src/views/campaign-emails/EmailVerify'
 import CampaignTemplate from '@src/views/campaign-template/CampaignTemplate'
 import EmailKlaviyo from '@src/views/email-klaviyo/EmailKlaviyo'
 import ReferralOffers from '@src/views/Referral/ReferralOffers'
+import ReferralOffersEdit from '@src/views/Referral/ReferralOffersEdit'
 import Referrals from '@src/views/referral-dashboard/ReferralDashboard'
 import OffersLog from '@src/views/offers-log/OffersLog'
 import PopupNotification from '@src/views/popup-notification/PopupNotification'
@@ -49,6 +50,10 @@ const Customers_Routes = [
   {
     path: '/merchant/referral-offers',
     element: <ReferralOffers />
+  },
+  {
+    path: '/merchant/referral-offers-edit/:offerId',
+    element: <ReferralOffersEdit />
   },
   {
     path: '/merchant/referral-dashboard',

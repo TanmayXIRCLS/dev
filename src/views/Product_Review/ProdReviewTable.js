@@ -33,41 +33,22 @@ import { MoreVertical, FileText, Trash2, Archive } from 'react-feather'
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
-const ProdReviewTable = () => {
+import apiData from "@src/@core/auth/api/api.json"
+
+const ProdReviewTable = (props) => {
+    const { reviewType } = props
     // const BootStrapCheckbox = forwardRef((props, ref) => {
     //     <div className='form-check'>
     //         <Input type='checkbox' ref={ref} {...props}/>
     //     </div>
     // })
+    const [reviewsArray, setReviewsArray] = useState({ reviews: [], filerReviews: [] })
     const [reviewData, setReviewData] = useState([])
     const [authorized, setAuthorized] = useState(false)
 
     const statusObj = {
         pending: 'light-warning',
         published: 'light-success'
-    }
-
-    const handleAuthorizeReview = async (review_id, status) => {
-        console.log("review_id", review_id)
-        try {
-            const response = await fetch(
-                `https://d550-110-226-182-52.ngrok-free.app/review/authorize/${review_id}/`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Authorization-Action": status ? "unauthorize" : "authorize"
-                    }
-                }
-            );
-            // window.location.reload(true)
-            if (!response.ok) {
-                throw new Error(`Authorization failed due to:${response.status} `);
-            }
-            console.log("Authorization successful!");
-            setAuthorized(!authorized)
-        } catch (error) {
-            console.error("Authorizing error: ", error);
-        }
     }
 
     const renderClient = row => {
@@ -104,7 +85,7 @@ const ProdReviewTable = () => {
             sortField: 'product',
             selector: row => row.product,
             cell: row => (
-                <div className=' my-1 d-flex justify-content-between align-items-center'>
+                <div className=' my-1 d-flex align-items-center gap-1'>
                     <img src={row.productImg} alt="" style={{ width: '20%', height: "auto" }} />
                     <div  >
                         <span className='fw-medium' style={{ fontSize: '14px' }}>{row.product}</span>
@@ -172,9 +153,9 @@ const ProdReviewTable = () => {
             name: <span className='fw-bold h5'>STATUS</span>,
             sortable: true,
             sortField: 'status',
-            selector: row => row.status,
+            selector: row => row.state,
             cell: row => (
-                row.status ? (
+                row.state ? (
                     <p className=" text-success" style={{ width: "9rem" }}>Approved</p>
                 ) : (
                     <p className=" text-danger" style={{ width: "9rem" }}>Pending</p>
@@ -188,9 +169,11 @@ const ProdReviewTable = () => {
             selector: row => row.votes,
             cell: row => (
                 <div className=' d-flex justify-content-between align-items-center gap-1'>
+                    {/* {row.likes.length + row.dislikes.length} */}
                     <BiUpvote size={20} color='green' />
-                    {row.votes}
+                    {row.likes.length}
                     <BiDownvote size={20} color='red' />
+                    {row.dislikes.length}
                 </div>
             )
         },
@@ -208,10 +191,10 @@ const ProdReviewTable = () => {
                                 tag={Link}
                                 className='w-100'
                                 to={`/merchant/product-review`}
-                                onClick={() => handleAuthorizeReview(row.id, row.status)}
+                                onClick={() => handleAuthorizeReview(row.id, row.state)}
                             >
                                 <FileText size={14} className='me-50' />
-                                <span className='align-middle'>{row.status ? "Unauthorise" : "Authorise"}</span>
+                                <span className='align-middle'>{row.state ? "Unauthorise" : "Authorise"}</span>
                             </DropdownItem>
                             {/* <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
                                 <Archive size={14} className='me-50' />
@@ -252,7 +235,30 @@ const ProdReviewTable = () => {
         { name: 'Gisela Leppard', product: 'Air Jordan', productDesc: 'Air Jordan is a line of basketball shoes produced by Nike', status: 'published', reviewer: '909090909', email: 'gleppard8@yandex.ru', date: "27 Apr 2022", rating: 3, review: "Ut mauris", reviewdesc: "Fusce consequat. Nulla nisl. Nunc nisl." }
     ]
 
+    const handleAuthorizeReview = async (review_id, status) => {
+        try {
+            const response = await fetch(
+                `${apiData.d_ngrok}/review/authorize/${review_id}/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Authorization-Action": status ? "unauthorize" : "authorize"
+                    }
+                }
+            );
+            // window.location.reload(true)
+            if (!response.ok) {
+                throw new Error(`Authorization failed due to:${response.status} `);
+            }
+            console.log("Authorization successful!");
+            setAuthorized(!authorized)
+        } catch (error) {
+            console.error("Authorizing error: ", error);
+        }
+    }
+
     useEffect(() => {
+        console.log("fetch useEffect")
         function formatDate(dateString) {
             const options = { year: "numeric", month: "short", day: "2-digit" };
             const formattedDate = new Date(dateString).toLocaleDateString(
@@ -261,7 +267,7 @@ const ProdReviewTable = () => {
             );
             return formattedDate;
         }
-        fetch("https://d550-110-226-182-52.ngrok-free.app/router/reviews/", {
+        fetch(`${apiData.d_ngrok}/router/reviews/`, {
             method: 'GET',
             headers: {
                 'ngrok-skip-browser-warning': true,
@@ -283,30 +289,52 @@ const ProdReviewTable = () => {
                         product: ele.productName,
                         productImg: ele.productImageUrl,
                         productDesc: "",
-                        status: ele.state,
+                        state: ele.state,
                         votes: ele.votes,
                         id: ele.id,
                         email: ele.email,
                         date: formatDate(ele.created_at),
                         rating: ele.rating,
                         review: ele.review,
-                        reviewdesc: ele.review
+                        reviewdesc: ele.review,
+                        likes: ele.review_likes,
+                        dislikes: ele.dislikes
                     }
 
                 })
-                setReviewData(reviewList)
+                setReviewData(reviewList.reverse())
+                setReviewsArray({ reviews: reviewList.reverse(), filerReviews: reviewList.reverse() })
             })
             .catch((error) => {
                 console.log(error)
             })
     }, [authorized])
 
+    useEffect(() => {
+        console.log("filter useEffect")
+        if (reviewType === "All") {
+            setReviewsArray({ ...reviewsArray, filerReviews: reviewsArray.reviews })
+        } else if (reviewType === "Published") {
+            const fList = reviewData.filter(ele => {
+                return ele.state === true
+            })
+            setReviewsArray({ ...reviewsArray, filerReviews: fList })
+        } else {
+            const fList = reviewData.filter(ele => {
+                return ele.state === false
+            })
+            setReviewsArray({ ...reviewsArray, filerReviews: fList })
+        }
+
+        console.log("reviewsArray", reviewsArray)
+    }, [reviewType])
+
     return (
         <>
             <div className="dataTableContainer">
                 <DataTable
                     width="100%"
-                    data={reviewData.reverse()}
+                    data={reviewsArray.filerReviews}
                     columns={Column}
                     // customStyles={customStyles}
                     className='react-dataTable'

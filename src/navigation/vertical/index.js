@@ -30,7 +30,7 @@ export default [
 
       {
         id: 'product-review',
-        title: 'Manage Reviews',
+        title: 'Reviews List',
         icon: <Circle size={20} />,
         navLink: '/merchant/product-review'
       },
@@ -42,7 +42,7 @@ export default [
       },
       {
         id: 'reviews',
-        title: 'Reviews',
+        title: 'Manage Reviews',
         icon: <Circle size={20} />,
         navLink: '/merchant/reviews'
       },
