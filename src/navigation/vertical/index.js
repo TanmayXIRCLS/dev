@@ -360,4 +360,16 @@ export default [
     icon: <Circle size={20} />,
     navLink: '/merchant/referral-dashboard'
   },
+  {
+    id: 'samples-dashboard',
+    title: 'Samples Dashboard',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/samples-dashboard'
+  },
+  {
+    id: 'affiliate-dashboard',
+    title: 'Affiliate Dashboard',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/affiliate-dashboard'
+  }
 ]

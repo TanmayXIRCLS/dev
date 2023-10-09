@@ -70,6 +70,8 @@ import WizardModernVertical from '@src/views/Campaign/Campaign'
 import Referrals from '@src/views/dashboard/Referrals'
 import EmailVerify from '@src/views/TalkByXIRCLS/campaign-emails/EmailVerify'
 import ReferralsDash from '@src/views/referral-dashboard/ReferralDashboard'
+import SamplesDashboard from '@src/views/samples-dashboard/SamplesDashboard'
+import AffiliateDashboard from '../../views/affiliate-dashboard/AffiliateDashboard'
 
 // import TotalReach from '@src/views/dashboard/TotalReach'
 
@@ -297,6 +299,14 @@ const Dashboard_Routes = [
   {
     path: '/merchant/scrapy/',
     element: <Scrapy />
+  },
+  {
+    path: '/merchant/samples-dashboard',
+    element: <SamplesDashboard />
+  },
+  {
+    path: '/merchant/affiliate-dashboard',
+    element: <AffiliateDashboard />
   }
 ]
 

@@ -1,6 +1,6 @@
 import { lazy } from 'react'
-const Home = lazy(() => import('@src/views/home/Home'))
-const Partner = lazy(() => import('@src/views/partner/Partner'))
+const Home = lazy(() => import('@src/views/main/home/Home'))
+const Partner = lazy(() => import('@src/views/main/partner/Partner'))
 
 
 const Homes_Routes = [
