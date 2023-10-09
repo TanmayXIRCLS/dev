@@ -24,13 +24,13 @@ export default [
   },
   {
     id: 'Product reviews',
-    title: 'Product reviews',
+    title: 'Product Reviews',
     icon: <TrendingUp size={20} />,
     children: [
 
       {
         id: 'product-review',
-        title: 'Reviews List',
+        title: 'Home',
         icon: <Circle size={20} />,
         navLink: '/merchant/product-review'
       },
@@ -104,8 +104,8 @@ export default [
     ]
   },
   {
-    id: 'Privilage XIRCL',
-    title: 'Privilage XIRCLS',
+    id: 'Privilege XIRCLs',
+    title: 'Privilege XIRCLS',
     icon: <Gift size={20} />,
     navLink: '',
     children: [
@@ -169,7 +169,7 @@ export default [
         id: 'ReferralsAnalysis',
         title: 'Referrals Analysis',
         icon: <Circle size={20} />,
-        navLink: '/merchant/ReferralsAnalysis'
+        navLink: '/merchant/referral_analysis'
       }
     ]
   },
@@ -274,7 +274,7 @@ export default [
     id: 'Campaign',
     title: 'Campaign',
     icon: <BarChart2 size={20} />,
-    navLink: '/merchant/campaign/'
+    navLink: '/merchant/campaign'
   },
   {
     id: 'Rewards',
@@ -295,15 +295,69 @@ export default [
     navLink: '/merchant/notify'
   },
   {
-    id: 'referral_analysis',
-    title: 'Referral Analysis',
-    icon: <Circle size={20} />,
-    navLink: '/merchant/referral_analysis'
-  },
-  {
     id: 'checkout',
     title: 'Checkout',
     icon: <Circle size={20} />,
     navLink: '/merchant/checkout'
-  }
+  },
+  {
+    id: 'offers log',
+    title: 'Offers Log',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/offers-log'
+  },
+  {
+    id: 'sms reports',
+    title: 'SMS Reports',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/sms-reports'
+  },
+  {
+    id: 'host/add-reward/details',
+    title: 'Host Rewards Details',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/host/add-reward/details'
+  },
+  {
+    id: 'host/add-reward/images',
+    title: 'Host Reward Images',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/host/add-reward/images'
+  },
+  {
+    id: 'sponsor/add-reward/budget',
+    title: 'Sponsor Reward Budget',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/sponsor/add-reward/budget'
+  },
+  {
+    id: 'sponsor/add-reward/customerGroup',
+    title: 'Sponsor Reward Customer Group',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/sponsor/add-reward/customerGroup'
+  },
+  {
+    id: 'wizard-modern-vertical',
+    title: 'Wizard Modern Vertical',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/wizard-modern-vertical'
+  },
+  {
+    id: 'referrals',
+    title: 'Referrals',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/referrals/'
+  },
+  {
+    id: 'email-verify',
+    title: 'Email Verify',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/email-verify'
+  },
+  {
+    id: 'referral-dashboard',
+    title: 'Referral Dashboard',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/referral-dashboard'
+  },
 ]

@@ -12,8 +12,9 @@ import "./navbar.css"
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(true)
+  // const [toggleSub, setToggleSub] = useState(true)
   const [openMenu, setOpenMenu] = useState('')
-  const [toggleSubMenu, setToggleSubMenu] = useState({ aboutMenuToggle: false, productMenuToggle: false })
+  const [toggleSubMenu, setToggleSubMenu] = useState({ aboutMenuToggle: false, productsMenuToggle: false })
 
 
   const aboutList = [
@@ -53,15 +54,25 @@ const Navbar = () => {
   ]
 
   const handleClick = (ele) => {
-    setOpenMenu(ele)
-    setToggleSubMenu({ aboutMenuToggle: false, productMenuToggle: false })
+    // Toggle the submenu if the clicked menu is the same as the openMenu
+    if (openMenu === ele) {
+      setToggleSubMenu({
+        ...toggleSubMenu,
+        [`${ele.toLowerCase()}MenuToggle`]: !toggleSubMenu[`${ele.toLowerCase()}MenuToggle`]
+      })
+    } else {
+      // Open the clicked menu and close the other one
+      setOpenMenu(ele)
+      setToggleSubMenu({ aboutMenuToggle: false, productsMenuToggle: false })
+    }
   }
+
 
   useEffect(() => {
     if (openMenu === "About") {
       setToggleSubMenu({ ...toggleSubMenu, aboutMenuToggle: !toggleSubMenu.aboutMenuToggle })
     } else if (openMenu === "Products") {
-      setToggleSubMenu({ ...toggleSubMenu, productMenuToggle: !toggleSubMenu.productMenuToggle })
+      setToggleSubMenu({ ...toggleSubMenu, productsMenuToggle: !toggleSubMenu.productsMenuToggle })
     }
   }, [openMenu])
 
@@ -96,7 +107,7 @@ const Navbar = () => {
             <li><p>Blogs</p></li>
             <li className='productLi'>
               <p onClick={() => handleClick("Products")}>Products <IoIosArrowDown /></p>
-              <div className={`subMenu ${toggleSubMenu.productMenuToggle ? "productSubMenuDown" : "productSubMenuUp"} p-1 border border-1`}>
+              <div className={`subMenu ${toggleSubMenu.productsMenuToggle ? "productSubMenuDown" : "productSubMenuUp"} p-1 border border-1`}>
                 <ul className=' list-unstyled'>
                   {
                     productList.map((ele, index) => (
