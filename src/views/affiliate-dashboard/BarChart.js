@@ -10,7 +10,7 @@ function greenBg() {
 };
 
 const data = {
-    labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
     datasets: [
         {
             data: [80, 75, 90, 80, 100, 80, 60],
@@ -54,7 +54,7 @@ const DailyBarGraph = () => {
     data.datasets[0].barPercentage = 0.5
 
     return (
-        <div style={{ width: '270px', height: '200px' }}>
+        <div style={{ width: '230px', height: '150px' }}>
             <Bar data={data} width={100} height={65} options={chartOptions} />
         </div>
     )

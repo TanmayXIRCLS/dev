@@ -1,0 +1,183 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// colors
+$primary: #1d8cf8;
+$secondary: #4f537b;
+$info: #11cdef;
+$success: #00bf9a;
+$warning: #ff8d72;
+$danger: #fd5d93;
+
+// timeline variables
+$body-bg: #1e1e2f;
+$timeline-before-bg : #ffffff;
+$timeline-body-bg: #fff;
+$timeline-body-round: 3px;
+$timeline-body-shadow: 1px 3px 9px rgba(0,0,0, .1);
+
+body {
+    background: $body-bg;
+    letter-spacing: 1px;
+}
+
+// page container
+.container {
+    max-width: 650px;
+    margin: 20px auto;
+}
+
+// typography
+p {
+    font-weight: 300;
+    line-height: 1;
+    font-size: 12px;
+    opacity: .8;
+    color: #000;
+}
+
+.cardPopDown {
+    top: 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.cardPopUp {
+    top: -500px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+// timeline style
+.timeline {
+    position: relative;
+    padding-left: 3.5rem;
+    margin: 0 0 0 15px;
+    color: white;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: -19px;
+        top: 10px;
+        width: 3px;
+        height: 100%;
+        background: $timeline-body-bg;
+    }
+
+    .timeline-container {
+        position: relative;
+        margin-bottom: 1.5rem;;
+
+        .timeline-icon {
+            position: absolute;
+            left: -88px;
+            top: 4px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 2rem;
+            background: $secondary;
+
+            i {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .timeline-body {
+            background: $timeline-body-bg;
+            border-radius: $timeline-body-round;
+            padding: 15px;
+            box-shadow: $timeline-body-shadow;
+
+            &:before {
+                content: '';
+                background: inherit;
+                width: 20px;
+                height: 20px;
+                display: block;
+                position: absolute;
+                left: -10px;
+                transform: rotate(45deg);
+                border-radius: 0 0 0 2px;
+            }
+
+            .timeline-title {
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+
+                .badge {
+                    // background: $secondary;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    // padding: 4px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+            }
+
+            .timeline-subtitle {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 300;
+                opacity: .4;
+                font-size: 11px;
+            }
+        }
+
+        // Primary Timeline
+        &.primary {
+            .badge,
+            .timeline-icon {
+                background: $primary !important;
+            }
+        }
+
+        // Info Timeline
+        &.info {
+            .badge,
+            .timeline-icon {
+                background: $info !important;
+            }
+        }
+
+        // Success Timeline
+        &.success {
+            .badge,
+            .timeline-icon {
+                background: $success !important;
+            }
+        }
+
+        // Warning Timeline
+        &.warning {
+            .badge,
+            .timeline-icon {
+                background: $warning !important;
+            }
+        }
+
+        // Dnager Timeline
+        &.danger {
+            .badge,
+            .timeline-icon {
+                background: $danger !important;
+            }
+        }
+
+    }
+}
+
+.accountSearch::placeholder{
+        font-size: 12px;
+}
