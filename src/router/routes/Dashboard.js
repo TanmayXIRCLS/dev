@@ -28,6 +28,7 @@ import SponsorDashboard from '@src/views/Privilege XIRCLS/SponsorDashboard/Spons
 import SponsorRewards from '@src/views/Privilege XIRCLS/sponsorRewards/SponsorRewards'
 import ViewOffers from '@src/views/Privilege XIRCLS/viewOffers/ViewOffers'
 import ViewRewards from '@src/views/Privilege XIRCLS/viewRewards/ViewRewards'
+import ReviewPage from '@src/views/Privilege XIRCLS/SponsorDashboard/addReward/ReviewPage'
 
 // referral
 import Home from '@src/views/Referrals/dash-home/Home'
@@ -38,7 +39,6 @@ import Referral_Analysis from '@src/views/Referrals/Referral_analysis/Referral_A
 
 // recommendation
 import Recommendation from '@src/views/Recommendations/recommendation/Recommendation'
-import HomePageRecommendation from '@src/views/Recommendations/HomePageRecommendation/HomePageRecommendation'
 
 // genderation
 import GnUsers from '@src/views/Genderation/GnUsers'
@@ -74,9 +74,17 @@ import SamplesDashboard from '@src/views/samples-dashboard/SamplesDashboard'
 import AffiliateDashboard from '../../views/affiliate-dashboard/AffiliateDashboard'
 
 // import TotalReach from '@src/views/dashboard/TotalReach'
+import GetStarted from './../../views/sample/GetStarted';
+import SetCondition from './../../views/sample/SetCondition';
+import CreateSample from './../../views/sample/CreateSample';
+import CampaignOption from '../../views/TalkByXIRCLS/getStarted/createCampaign/CampaignOption'
+import SmsCampaign from './../../views/TalkByXIRCLS/getStarted/createCampaign/SmsCampaign';
+import HomePageRecommendation from './../../views/HomePageRecommendation/HomePageRecommendation';
+import MainHome from './../../views/MainHome/MainHome';
+import Timeline from './../../views/TimeLine/Timeline';
+import WebsiteAnalytics from './../../views/WebsiteAnalytics/WebsiteAnalytics';
 
 const Dashboard = lazy(() => import('@src/views/dashboard/Dashboard'))
-
 const Dashboard_Routes = [
   {
     path: '/merchant/dashboard',
@@ -161,6 +169,10 @@ const Dashboard_Routes = [
   {
     path: '/merchant/sponsorRewards-rewards',
     element: <ViewRewards />
+  },
+  {
+    path: '/merchant/sponsor/add-reward/review',
+    element: <ReviewPage />
   },
   {
     path: '/merchant/homeReferral',
@@ -307,6 +319,42 @@ const Dashboard_Routes = [
   {
     path: '/merchant/affiliate-dashboard',
     element: <AffiliateDashboard />
+  },
+  {
+    path: '/merchant/sample/get-started',
+    element: <GetStarted />
+  },
+  {
+    path: '/merchant/sample/get-started/set-conditions',
+    element: <SetCondition />
+  },
+  {
+    path: '/merchant/sample/get-started/create-sample',
+    element: <CreateSample />
+  },
+  {
+    path: '/merchant/create-campaign',
+    element: <CampaignOption />
+  },
+  {
+    path: '/merchant/create-campaign/sms',
+    element: <SmsCampaign />
+  },
+  {
+    path: '/merchant/homepageRecommendation',
+    element: <HomePageRecommendation />
+  },
+  {
+    path: '/merchant/mainhome',
+    element: <MainHome />
+  },
+  {
+    path: '/merchant/website-analytics',
+    element: <WebsiteAnalytics />
+  },
+  {
+    path: '/merchant/timeline',
+    element: <Timeline />
   }
 ]
 

@@ -371,5 +371,35 @@ export default [
     title: 'Affiliate Dashboard',
     icon: <Circle size={20} />,
     navLink: '/merchant/affiliate-dashboard'
+  },
+  {
+    id: 'Sample Get Started',
+    title: 'Sample Get Started',
+    icon: <Circle size={20} />,
+    navLink: '/merchant/sample/get-started'
+  },
+  {
+    id: 'homepage',
+    title: 'Homepage Recommendation',
+    icon: <User size={20} />,
+    navLink: '/merchant/homepageRecommendation'
+  },
+  {
+    id: 'mainhome',
+    title: 'Main Home',
+    icon: <User size={20} />,
+    navLink: '/merchant/mainhome'
+  },
+  {
+    id: 'timeline',
+    title: 'Time Line',
+    icon: <User size={20} />,
+    navLink: '/merchant/timeline'
+  },
+  {
+    id: 'website-analytics',
+    title: 'Website Analytics',
+    icon: <User size={20} />,
+    navLink: '/merchant/website-analytics'
   }
 ]

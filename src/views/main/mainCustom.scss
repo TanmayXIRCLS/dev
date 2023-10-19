@@ -1,0 +1,146 @@
+@font-face {
+    font-family: Colaborate;
+    src: url("../../../public/fonts/Colaborate/ColabReg.otf");
+}
+
+@font-face {
+    font-family: Colaborate Med;
+    src: url("../../../public/fonts/Colaborate/ColabMed.otf");
+}
+
+@font-face {
+    font-family: Colaborate Lig;
+    src: url("../../../public/fonts/Colaborate/ColabLig.otf");
+}
+
+.colaborateFont {
+    font-family: Colaborate;
+}
+
+// heading
+
+.main-heading {
+    color: #000 !important;
+}
+
+// -----------------------
+
+// background 
+.main-bg-dark {
+    background-color: #000 !important;
+}
+
+// line height
+
+.lh-29 {
+    line-height: 29px !important;
+}
+
+
+
+
+// buttons
+.main-btn-blue {
+    transition: all .25s;
+
+    background: transparent linear-gradient(90deg, #096ef2, #0092ff) 0 0 !important;
+    color: white !important;
+    border: none;
+    // font-size: 20px !important;
+    &:active {
+        transform: scale(0.9);
+        
+    }
+}
+
+
+.main-btn-dark {
+    transition: all .25s;
+
+    color: #000 !important;
+    border: solid 1px #000 !important;
+
+    // font-size: 18px !important;
+    &:hover {
+        color: #fff !important;
+        background: #000 !important;
+    }
+    &:active {
+        transform: scale(0.9);
+        
+    }
+  
+}
+
+
+
+.main-btn-light {
+    color: #fff !important;
+    border: solid 1px #fff !important;
+    // font-size: 18px !important;
+    transition: all .25s;
+
+    &:hover {
+        color: #000 !important;
+        // border: solid 1px #000 !important;
+        background: #fff !important;
+    }
+
+    &:active {
+        transform: scale(0.9);
+        
+    }
+
+}
+
+
+// ------------------------------
+
+// margin
+.mt-200 {
+    margin-top: 200px !important;
+}
+
+.mt190 {
+    margin-top: 190px !important;
+}
+
+.mt180 {
+    margin-top: 180px !important;
+}
+
+.mt170 {
+    margin-top: 170px !important;
+}
+
+.mt160 {
+    margin-top: 170px !important;
+}
+
+.mt150 {
+    margin-top: 150px !important;
+}
+
+.mt140 {
+    margin-top: 140px !important;
+}
+
+.mt130 {
+    margin-top: 130px !important;
+}
+
+.mt120 {
+    margin-top: 120px !important;
+}
+
+.mt110 {
+    margin-top: 110px !important;
+}
+
+.mt80 {
+    margin-top: 80px !important;
+}
+
+.mt60 {
+    margin-top: 60px !important;
+}

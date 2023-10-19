@@ -22,6 +22,7 @@ const Reviews = () => {
 
   const [autoApproved, setAutoApproved] = useState(false)
   const [autoPublished, setAutoPublished] = useState(0)
+  const [anonymousLikes, setAnonymousLikes] = useState(false)
 
   // const handleRatingChange = (newRating, index) => {
   //   const newRatings = [...ratings]
@@ -139,6 +140,25 @@ const Reviews = () => {
 
   }
 
+  const handleAnonymousLikes = async () => {
+    try {
+      const response = await fetch(
+        `${apiData.d_ngrok}/toggle-like-config/`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Authorization failed due to:${response.status} `);
+      }
+      setAnonymousLikes(!anonymousLikes)
+      console.log("Anonymous Likes successful!");
+    } catch (error) {
+      console.error("Authorizing error: ", error);
+    }
+  }
+
   const handleSubmit = async () => {
     const form_data = new FormData()
     form_data.append('minimum_rating', autoPublished)
@@ -163,6 +183,7 @@ const Reviews = () => {
   useEffect(async () => {
     const url1 = `${apiData.d_ngrok}/router/current-status/`
     const url2 = `${apiData.d_ngrok}/router/current-min/`
+    const url3 = `${apiData.d_ngrok}/router/anonymous-status/`
 
     const responses = await Promise.all([
       fetch(url1,
@@ -178,6 +199,13 @@ const Reviews = () => {
           headers: {
             'ngrok-skip-browser-warning': true,
           }
+        }),
+      fetch(url3,
+        {
+          method: "GET",
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          }
         })
     ])
 
@@ -186,7 +214,11 @@ const Reviews = () => {
 
     const autoPublishedData = await responses[1].json()
     setAutoPublished(autoPublishedData[0].minimum_rating)
-    console.table({ autoApprovedData, autoPublishedData })
+
+    const anonymousLikesData = await responses[2].json()
+    setAnonymousLikes(anonymousLikesData[0]["use_user_auth"])
+
+    console.table({ autoApprovedData, autoPublishedData, anonymousLikes })
 
 
   }, [])
@@ -371,6 +403,8 @@ const Reviews = () => {
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
+                  onChange={handleAnonymousLikes}
+                  checked={anonymousLikes}
                 />
               </div>
             </div>
