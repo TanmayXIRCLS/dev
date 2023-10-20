@@ -29,34 +29,9 @@ const Section6 = () => {
         }
     })
     return (
-        <div style={{ padding: "100px 0" }}>
-            <h1 className=' text-center fw-bolder mb-5'>Join A Global Network <br />Of Companies</h1>
-            {/* <marquee behavior="scroll" direction="left" scrollamount="5">
-                <div className="d-flex justify-content-evenly align-items-center">
-                    <div ><img className='joinCompanyLogo' src={bewakoofLogo} /></div>
-                    <div><img className='joinCompanyLogo' src={cornitosLogo} /></div>
-                    <div><img className='joinCompanyLogo' src={designersClassLogo} /></div>
-                    <div> <img className='joinCompanyLogo' src={hammerLogo} /></div>
-                    <div><img className='joinCompanyLogo' src={kapivaLogo} /></div>
-                    <div> <img className='joinCompanyLogo' src={leafLogo} /></div>
-                    <div><img className='joinCompanyLogo' src={snitchBlackLogo} /></div>
-                    <div><img className='joinCompanyLogo' src={skullcandyLogo} /></div>
-                </div>
-            </marquee> */}
-            {/* <div className='marquee-container'>
-                <div className="marquee-content">
-                    <div className="d-flex justify-content-evenly align-items-center">
-                        <div ><img className='joinCompanyLogo' src={bewakoofLogo} /></div>
-                        <div><img className='joinCompanyLogo' src={cornitosLogo} /></div>
-                        <div><img className='joinCompanyLogo' src={designersClassLogo} /></div>
-                        <div> <img className='joinCompanyLogo' src={hammerLogo} /></div>
-                        <div><img className='joinCompanyLogo' src={kapivaLogo} /></div>
-                        <div> <img className='joinCompanyLogo' src={leafLogo} /></div>
-                        <div><img className='joinCompanyLogo' src={snitchBlackLogo} /></div>
-                        <div><img className='joinCompanyLogo' src={skullcandyLogo} /></div>
-                    </div>
-                </div>
-            </div> */}
+        <div className='mt170' >
+            <h1 className=' text-center display-3 main-heading fw-bolder mb-5'>Join A Global Network <br />Of Companies</h1>
+     
             <div className='SwipePad'>
                 <Swiper
                     spaceBetween={30}
@@ -82,35 +57,9 @@ const Section6 = () => {
                 </Swiper>
             </div>
 
-            {/* <div className=' d-flex flex-wrap justify-content-evenly align-items-center' style={{ margin: "100px 0" }}>
-                <div>
-                    <img src={bewakoofLogo} alt="" />
-                </div>
-                <div>
-                    <img src={cornitosLogo} alt="" />
-                </div>
-                <div>
-                    <img src={designersClassLogo} alt="" />
-                </div>
-                <div>
-                    <img src={hammerLogo} alt="" />
-                </div>
-                <div>
-                    <img src={kapivaLogo} alt="" />
-                </div>
-                <div>
-                    <img src={leafLogo} alt="" />
-                </div>
-                <div>
-                    <img src={snitchBlackLogo} alt="" />
-                </div>
-                <div>
-                    <img src={skullcandyLogo} alt="" />
-                </div>
-            </div> */}
-
+          
             <div className=' d-flex justify-content-center'>
-                <button className="btn btn-primary fs-5 py-1">Learn more about us</button>
+                <button className="btn btn-primary btn-lg  ">Learn more about us</button>
             </div>
         </div >
     )

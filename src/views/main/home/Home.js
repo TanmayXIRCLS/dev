@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../Navbar/Navbar'
-import Hero from './components/Hero/Hero'
+import './home.scss'
+import Navbar from '../navbar/Navbar'
 import Section1 from './components/section1/Section1'
 import Section2 from './components/section2/Section2'
 import Section3 from './components/section3/Section3'
@@ -9,22 +9,24 @@ import Section5 from './components/section5/Section5'
 import Section6 from './components/section6/Section6'
 import Section7 from './components/section7/Section7'
 import Footer from '../footer/Footer'
-
-import "./home.css"
+import Hero from './components/Hero/Hero'
+import TestS5 from './components/section5/TestS5'
 
 const Home = () => {
   return (
-    <div className='HomePage' style={{ background: "#fff" }}>
+    <div style={{ background: "#fff" }} className='home '>
       <Navbar />
       <Hero />
+      
       <Section1 />
       <Section2 />
       <Section3 />
       <Section4 />
-      <Section5 />
+      <TestS5/>
+      {/* <Section5 /> */}
       <Section6 />
       <Section7 />
-      <hr className='w-75 m-auto' />
+      <hr align="center" className='mt170' style={{ width: "75%" }} />
       <Footer />
     </div>
   )

@@ -131,3 +131,20 @@
         width: 350px;
     }
 }
+
+ .homeNav ul li{
+            font-size: 18px !important;
+            color: #000 !important;
+} 
+
+/* .btn{
+    color: #000 !important;
+}  */
+
+.newBtn{
+    background: transparent linear-gradient(90deg,#096ef2,#0092ff) 0 0 !important;
+    color:white !important;
+    border:none;
+    font-size: 20px !important;
+    /* background: red !important; */
+}

@@ -79,10 +79,10 @@ const Navbar = () => {
   return (
     <>
       <nav className="homeNav py-1">
-        <img src={logo} alt="logo image" style={{ width: "147px" }} className='mx-2' />
+        <img src={logo} alt="logo image" style={{ width: "200px" }} className='mx-2' />
         <div className={`toggleMenu ${toggleMenu ? "toggleMenuUp" : "toggleMenuDown"}`}>
           <ul className=' list-unstyled d-inline-flex gap-5 pt-1'>
-            <li style={{ color: "rgba(44, 104, 246, 1)" }}><p>Home</p></li>
+            <li style={{ color: "#5adbb5" }}><p>Home</p></li>
             <li className='aboutLi'>
               <p onClick={() => handleClick("About")}>About Us<IoIosArrowDown /></p>
               <div className={`subMenu ${toggleSubMenu.aboutMenuToggle ? "aboutSubMenuDown" : "aboutSubMenuUp"} p-1 border border-1`}>
@@ -128,8 +128,8 @@ const Navbar = () => {
             </li>
           </ul>
           <div className='navBtn gap-1'>
-            <button type="button" className=' btn btn-primary '>Sign Up</button>
-            <button type="button" className=' btn btn-outline-primary '>Login</button>
+            <button type="button" className=' btn  btn-lg newBtn '>Signup for Free</button>
+            <button type="button" className=' btn  border-black text-black btn-lg' style={{fontSize:"20px"}}>Login</button>
           </div>
         </div>
         <div className='menuBtn' onClick={() => setToggleMenu(!toggleMenu)}>

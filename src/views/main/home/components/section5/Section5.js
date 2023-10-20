@@ -2,8 +2,7 @@ import React from 'react'
 import { Carousel } from 'react-bootstrap'
 import profileImg from "@src/assets/images/profile-image.png"
 import "./section5.css"
-
-const Section5 = () => {
+const   Section5 = () => {
     const companyDetails = [
         {
             name: "BADMAASH",
@@ -26,15 +25,15 @@ const Section5 = () => {
     ]
 
     return (
-        <div>
-            <Carousel className=' pt-0'>
+        <div className='mt150 testo'>
+            <Carousel className=' pt-0 m-0'>
                 {
                     companyDetails.map((ele, index) => (
                         <Carousel.Item key={index}>
-                            <div className=' position-relative ' style={{ padding: "180px 0" }}>
+                            <div className=' position-relative main-cont' >
                                 <div className=' py-3 section5Content' style={{ background: "#F6CB4554.33%", height: "400px" }}>
-                                    <p className=' fw-bold text-black'>THE TESTIMONIAL</p>
-                                    <h3 className=' fw-bolder mb-2 text-black testimonialDesc' >
+                                    <h4 className='  fw-bolder text-secondary'>TESTIMONIAL</h4>
+                                    <h3 className=' fw-bold mb-2 text-black testimonialDesc lh-29' >
                                         {ele.desc}
                                     </h3>
                                     <div className=' d-flex align-items-center mb-2 gap-1' style={{ width: "250px" }}>
@@ -55,5 +54,6 @@ const Section5 = () => {
         </div>
     )
 }
+
 
 export default Section5

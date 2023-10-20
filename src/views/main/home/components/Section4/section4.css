@@ -1,9 +1,0 @@
-.sect4Div {
-    padding: 120px 100px;
-}
-
-@media screen and (max-width: 500px) {
-    .sect4Div {
-        padding: 80px 20px;
-    }
-}

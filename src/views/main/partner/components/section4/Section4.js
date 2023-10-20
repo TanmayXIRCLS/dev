@@ -1,65 +1,73 @@
 import React from 'react'
-import { Card, Col, Row } from 'reactstrap'
-import { AiOutlineShoppingCart, AiOutlineShop, AiOutlineGlobal } from 'react-icons/ai'
-import { GiTrophyCup } from 'react-icons/gi'
-import { SiBrandfolder } from 'react-icons/si'
-import { BsGlobeAmericas, BsCameraReels } from 'react-icons/bs'
-import { BiBuildings } from 'react-icons/bi'
-import { LiaMoneyBillWaveAltSolid } from 'react-icons/lia'
-
-import { Briefcase, User } from 'react-feather'
-import Avatar from '@components/avatar'
-
+import { Col, Row } from 'reactstrap'
+import { PiHandshakeFill } from 'react-icons/pi'
+import { BiCookie, BiLineChart } from 'react-icons/bi'
+import { FaMoneyBillTransfer } from 'react-icons/fa6'
+import { GiTakeMyMoney } from 'react-icons/gi'
+import { MdWifiTethering } from 'react-icons/md'
 
 export default function Section4() {
-    const iconSize = 24
+    const iconSize = 30
+    const color = "#9BA4B5"
+    const data = [
+        {
+            title: "Instant Trust",
+            icon: <PiHandshakeFill color={color} size={iconSize} />,
+            desc: "Boost your credibility with an industry-transforming martech company that consistently launches innovative marketing solutions."
+        },
+        {
+            title: "Scale & Grow",
+            icon: <BiLineChart color={color} size={iconSize} />,
+            desc: "Expand your business by offering XIRCLS solutions to existing & new customers, thereby attracting new business opportunities."
+        },
+        {
+            title: "Industry-Leading Commissions",
+            icon: <GiTakeMyMoney color={color} size={iconSize} />,
+            desc: "Earn upto 20% commission per sale on first & recurring sales."
+        },
+        {
+            title: "Extended Cookie Life",
+            icon: <BiCookie color={color} size={iconSize} />,
+            desc: "Get paid for any visitor who makes a purchase within 120 days of clicking on your affiliate link."
+        },
+        {
+            title: "Earn in Multiple Currencies",
+            icon: <FaMoneyBillTransfer color={color} size={iconSize} />,
+            desc: "Earn sales commissions in the currencies that your clients purchase our plans in. Set up a global revenue stream."
+        },
+        {
+            title: "Remote-First Culture",
+            icon: <MdWifiTethering color={color} size={iconSize} />,
+            desc: "Our team is accustomed to working with partners across the globe. Stay connected to us no matter where you are."
+        }
+
+    ]
     return (
-        <div className='section4 mt100'>
+        <div className='section6 d-flex justify-content-center align-items-center flex-column mt170' >
+            <div className=' text-center'>
+                <h2 className='display-3 text-center main-heading fw-bolder'>
+                    Why become a XIRCLS Partner?
+                </h2>
+                <Row className='text-start match-height w-75 m-auto mt-2'>
 
-                <div className=' text-center mt-1'>
-                    <div className=' display-6 fw-bolder text-black '>Your network, our <span className='text-orange'>Ideal Audience</span></div>
-                    {/* <p className=4fs-6 fw-bolder text-dark'>We served a wide range of users</p> */}
+                    {
+                        data.map((data) => {
+                            return (
+                                <Col lg="4" md="6" className=''>
+                                    <div className='m-1 mt-3  '>
+                                        <div> {data.icon} </div>
+                                        <div className='mt-1'>
+                                            <h2 className='text-black'>{data.title}</h2>
+                                            <h4 className=' text-secondary lh-29'>{data.desc}</h4>
+                                        </div>
+                                    </div>
+                                </Col>
+                            )
+                        })
+                    }
 
-                    <Row className='match-height w-75 m-auto py-2'>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center  '>
-                                <Avatar icon={<AiOutlineShop size={iconSize} />} color="light-primary" style={{ padding: "3px" }} />
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Small business owners</h3>
-                            </Card>
-                        </Col>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center '>
-                                <Avatar icon={<SiBrandfolder size={iconSize} />} color="light-info" style={{ padding: "3px" }} />
-
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Reputed brands</h3>
-                            </Card>
-                        </Col>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center '>
-                                <Avatar icon={<AiOutlineGlobal size={iconSize} />} color="light-success" style={{ padding: "3px" }} />
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Publications</h3>
-                            </Card>
-                        </Col>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center '>
-                                <Avatar icon={<BsCameraReels size={iconSize} />} color="light-warning" style={{ padding: "3px" }} />
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Ad & Media Agencies</h3>
-                            </Card>
-                        </Col>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center '>
-                                <Avatar icon={<BiBuildings size={iconSize} />} color="light-danger" style={{ padding: "3px" }} />
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Infrastructure & Utilities Companies</h3>
-                            </Card>
-                        </Col>
-                        <Col md="4" sm="6" >
-                            <Card className='border d-flex flex-row p-1 justify-content-center align-items-center '>
-                                <Avatar icon={<LiaMoneyBillWaveAltSolid size={iconSize} />} color="light-warning" style={{ padding: "3px" }} />
-                                <h3 className='fs-4 fw-bold text-start text-dark m-0 ms-1'>Financial Services</h3>
-                            </Card>
-                        </Col>
-                    </Row>
-                </div>
+                </Row>
+            </div>
         </div>
     )
 }

@@ -22,6 +22,9 @@
     border-radius: 50%;
     background-color: #535353;
 }
+.main-cont{
+    padding: 160px 0 !important;
+}
 
 @media screen and (min-width: 2000px) {
     .section5Content {
@@ -63,4 +66,8 @@
         width: 80%;
         margin-bottom: 20px;
     }
+    .main-cont{
+        padding: 0px !important;
+    }
+    
 }
