@@ -61,3 +61,12 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* Your other CSS styles */
+
+/* Media query to hide image on small and extra-small devices */
+@media (max-width: 767px) {
+  .section4-img img {
+    display: none;
+  }
+}

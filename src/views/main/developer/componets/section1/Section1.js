@@ -20,8 +20,8 @@ export const Section1 = () => {
                             </h3>
                             <br />
                             <div className='d-flex gap-2 '>
-                                <Button variant="success my-1 text-white px-3 py-1">Start Building</Button>
-                                <Button variant="outline-success my-1 px-3 py-1">Explore APIs</Button>
+                                <Button variant="success my-1 btn-lg fs-3 px-3 py-1 ">Start Building</Button>
+                                <Button variant="outline-success btn-lg fs-3 px-3 py-1  my-1">Explore APIs</Button>
                             </div>
                         </div>
                     </Card>
