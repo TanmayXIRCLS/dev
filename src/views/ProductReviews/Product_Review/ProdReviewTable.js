@@ -285,20 +285,20 @@ const ProdReviewTable = (props) => {
                 const jsonData = JSON.parse(data)
                 const reviewList = jsonData?.reviews?.map(ele => {
                     return {
-                        name: ele.custName,
-                        product: ele.productName,
-                        productImg: ele.productImageUrl,
-                        productDesc: "",
-                        state: ele.state,
-                        votes: ele.votes,
+                        name: ele.customer.name,
+                        product: ele.product_name,
+                        productImg: ele.product_image_url,
+                        productDesc: ele.product_description,
+                        state: ele.published,
+                        votes: ele?.votes,
                         id: ele.id,
-                        email: ele.email,
+                        email: ele.customer.email,
                         date: formatDate(ele.created_at),
                         rating: ele.rating,
                         review: ele.review,
                         reviewdesc: ele.review,
-                        likes: ele.review_likes,
-                        dislikes: ele.dislikes
+                        likes: ele.total_likes,
+                        dislikes: ele.total_dislikes
                     }
 
                 })

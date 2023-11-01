@@ -27,12 +27,13 @@ import NumberInput from "../components/NumberInput"
 
 const Reviews = () => {
   const initialState = { widgetTab: false, permissionTab: false, emailTab: false, emailReminderTab: false, customTab: false }
-  const [openTab, setOpenTab] = useState({ ...initialState, customTab: true })
+  const [openTab, setOpenTab] = useState({ ...initialState, widgetTab: true })
   const [customStyle, setCustomStyle] = useState({ primaryColor: "#000", secondaryColor: "#fd7e97", backgroundColor: "#f3ecec", fontSize: 15, fontColor: "#000", borderColor: "#000", borderSize: 0, borderRadius: 10, defaultRating: Star, blankRating: blankStar })
   const [styleDropDown, setStyleDropDown] = useState({ basic: true, font: true, border: true, rating: true })
   const [rating] = useState(4)
   const [ratings] = useState([0, 2, 4, 3, 2])
 
+  const [permissionData, setPermissionData] = useState({ autoApproved: false, autoPublished: 0, anonymousLikes: false, verifiedTag: false })
   const [autoApproved, setAutoApproved] = useState(false)
   const [autoPublished, setAutoPublished] = useState(0)
   const [anonymousLikes, setAnonymousLikes] = useState(false)
@@ -133,8 +134,6 @@ const Reviews = () => {
   }
 
   const handleAutoApproved = async () => {
-    console.log("toggle")
-    setAutoApproved(!autoApproved)
     try {
       const response = await fetch(
         `${apiData.d_ngrok}/toggle-status/`,
@@ -146,7 +145,7 @@ const Reviews = () => {
       if (!response.ok) {
         throw new Error(`Authorization failed due to:${response.status} `);
       }
-      console.log("Authorization successful!");
+      setPermissionData(!permissionData.autoApproved)
     } catch (error) {
       console.error("Authorizing error: ", error);
     }
@@ -166,7 +165,23 @@ const Reviews = () => {
         throw new Error(`Authorization failed due to:${response.status} `);
       }
       setAnonymousLikes(!anonymousLikes)
-      console.log("Anonymous Likes successful!");
+    } catch (error) {
+      console.error("Authorizing error: ", error);
+    }
+  }
+  const handleVerifiedTag = async () => {
+    try {
+      const response = await fetch(
+        `${apiData.d_ngrok}/enable-verified-tag/`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Authorization failed due to:${response.status} `);
+      }
+      setPermissionData({ ...permissionData, verifiedTag: !permissionData.verifiedTag })
     } catch (error) {
       console.error("Authorizing error: ", error);
     }
@@ -274,7 +289,8 @@ const Reviews = () => {
     ])
 
     const autoApprovedData = await responses[0].json()
-    setAutoApproved(autoApprovedData[0].auto_approve)
+    setPermissionData({ ...permissionData, autoApproved: autoApprovedData[0].auto_approve })
+
 
     const autoPublishedData = await responses[1].json()
     setAutoPublished(autoPublishedData[0].minimum_rating)
@@ -312,7 +328,7 @@ const Reviews = () => {
             <li class={`nav-item nav-link ${openTab.permissionTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, permissionTab: true })
             }} role="presentation">
-              <FiSettings style={{ fontSize: "16px" }} />Permissionsx
+              <FiSettings style={{ fontSize: "16px" }} />Permissions
             </li>
             <li class={`nav-item nav-link ${openTab.emailTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, emailTab: true })
@@ -409,7 +425,7 @@ const Reviews = () => {
                     console.log("to")
                     handleAutoApproved()
                   }}
-                  checked={autoApproved}
+                  checked={permissionData.autoApproved}
                 />
               </div>
             </div>
@@ -453,10 +469,12 @@ const Reviews = () => {
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
+                  onChange={handleVerifiedTag}
+                  checked={permissionData.verifiedTag}
                 />
               </div>
             </div>
-            <div className={`row d-flex ${autoApproved ? "nonClickableDiv" : ""}`}>
+            <div className={`row d-flex ${permissionData.autoApproved ? "nonClickableDiv" : ""}`}>
               <div className="col d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1">
                   Auto-publish reviews that are {autoPublished} stars & above
@@ -479,7 +497,7 @@ const Reviews = () => {
               </div>
             </div>
             <div className=" d-flex justify-content-end">
-              <button className={`btn btn-primary ${autoApproved ? "nonClickableDiv" : ""}`} onClick={() => handleSubmit()}>Save</button>
+              <button className={`btn btn-primary ${permissionData.autoApproved ? "nonClickableDiv" : ""}`} onClick={() => handleSubmit()}>Save</button>
             </div>
           </CardBody>
         </Card>
