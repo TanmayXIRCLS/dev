@@ -6,7 +6,7 @@ import { AiFillStar, AiOutlineArrowRight } from "react-icons/ai"
 import BarChart from './BarChart'
 import "./Analytics.css"
 import DoughnutChart from './DoughnutChart'
-import reviewList from "./reviews.json"
+// import reviewList from "./reviews.json"
 import apiData from '@src/@core/auth/api/api.json';
 import Flatpickr from 'react-flatpickr';
 import '@styles/react/libs/flatpickr/flatpickr.scss'
@@ -23,18 +23,18 @@ const Analytics = () => {
 
     const [startMonth, setStartMonth] = useState('0')
     const [endMonth, setEndMonth] = useState('11')
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-    const [durationOption, setDurationOption] = useState('1mo 0days')
-    const durationOptions = ["1mo 0 days", "1mo 3 days", "1mo 15 days", "2mo 0 days", "2mo 10 days"]
+    // const [durationOption, setDurationOption] = useState('1mo 0days')
+    // const durationOptions = ["1mo 0 days", "1mo 3 days", "1mo 15 days", "2mo 0 days", "2mo 10 days"]
 
     const [productsData, setProductsData] = useState({})
 
-    console.log(rateOption, rateOptions)
+    console.log(rateOption)
 
     const options = {
-        mode: "range", // Set the mode to "range" to select a range of dates
-        dateFormat: "F Y", // Use "F Y" format to display the month and year
+        mode: "range",
+        dateFormat: "F Y",
         onClose: function (selectedDates, dateStr, instance) {
             // Handle the selected date range here
             console.log(selectedDates)
@@ -100,15 +100,14 @@ const Analytics = () => {
                                 <ul className=' list-unstyled mb-2'>
                                     {
                                         rateOptions.map((ele, index) => {
+                                            let percentage = productsData?.ratings_data ? ((productsData?.ratings_data[rateOptions?.length - index] / productsData?.total_reviews) * 100).toFixed(2) : 0
+                                            console.log("percentage", percentage)
                                             return (
-                                                <li className={`d-flex justify-content-evenly align-items-center mb-1 ${(rateOption === ele || rateOption === 'All ') ? 'opacity-100' : 'opacity-25'
-                                                    }`}
-                                                >
+                                                <li className="d-flex justify-content-evenly align-items-center mb-1">
                                                     <AiFillStar style={{ color: "yellow", fontSize: "20px" }} />
                                                     <span className=' fw-bold fs-5'>{rateOptions.length - index}</span>
-                                                    <span className=' d-block w-75 rounded-pill' style={{ height: "5px", background: "rgb(219, 219, 219)" }}></span>
-                                                    {productsData?.ratings_data ? ((productsData?.ratings_data[rateOptions?.length - index] / productsData?.total_reviews) * 100).toFixed(2) : ''}
-                                                    %
+                                                    <span className=' d-block w-75 rounded-pill' style={{ height: "5px", backgroundImage: `linear-gradient(to right, yellow ${percentage}%, rgb(219, 219, 219) ${100 - percentage}%` }}></span>
+                                                    {percentage}%
                                                 </li>
                                             )
                                         })
@@ -186,7 +185,7 @@ const Analytics = () => {
                                         productsData ?
                                             productsData?.top_products?.slice(0, 5).map(item => (
                                                 <tr>
-                                                    <td className=' text-center '><img src={item.image} alt="product image" width={30} /></td>
+                                                    <td className=' text-center '><img src={item.image} alt="product" width={30} /></td>
                                                     <td className=' text-center '>{item.name}</td>
                                                     <td className=' text-center '>{item.average}</td>
                                                 </tr>

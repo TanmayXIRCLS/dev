@@ -91,27 +91,27 @@ const ProductReview = () => {
                                         <div className="card2 d-flex align-items-center">
                                             <span className='fw-bold' style={{ width: '5rem' }} >5 star</span>
                                             <Progress value={61.50} className='w-100 h-10' style={{ marginRight: "1rem" }} />
-                                            <span className='fw-bold'>{starInfo[5]}</span>
+                                            <span className='fw-bold'>{starInfo[5] || 0}</span>
                                         </div>
                                         <div className="card2 d-flex align-items-center">
                                             <span className='fw-bold' style={{ width: '5rem' }} >4 star</span>
                                             <Progress value={30} className='w-100 h-10' style={{ marginRight: "1rem" }} />
-                                            <span className='fw-bold'>{starInfo[4]}</span>
+                                            <span className='fw-bold'>{starInfo[4] || 0}</span>
                                         </div>
                                         <div className="card2 d-flex align-items-center">
                                             <span className='fw-bold' style={{ width: '5rem' }} >3 star</span>
                                             <Progress value={15} className='w-100 h-10' style={{ marginRight: "1rem" }} />
-                                            <span className='fw-bold'>  {starInfo[3]}</span>
+                                            <span className='fw-bold'>  {starInfo[3] || 0}</span>
                                         </div>
                                         <div className="card2 d-flex align-items-center">
                                             <span className='fw-bold' style={{ width: '5rem' }} >2 star</span>
                                             <Progress value={7} className='w-100 h-10' style={{ marginRight: "1rem" }} />
-                                            <span className='fw-bold'>{starInfo[2]}</span>
+                                            <span className='fw-bold'>{starInfo[2] || 0}</span>
                                         </div>
                                         <div className="card2 d-flex align-items-center">
                                             <span className='fw-bold' style={{ width: '5rem' }} >1 star</span>
                                             <Progress value={2} className='w-100 h-10' style={{ marginRight: "1rem" }} />
-                                            <span className='fw-bold'>{starInfo[1]}</span>
+                                            <span className='fw-bold'>{starInfo[1] || 0}</span>
                                         </div>
                                     </div>
                                 </Col>
@@ -154,13 +154,6 @@ const ProductReview = () => {
                                     <input className="form-control mr-sm-2 w-auto mx-3" type="search" placeholder="Search reviews" aria-label="Search" />
                                 </Col>
                                 <Col className='d-flex justify-content-end align-items-center gap-1 dropsdown ' md="7" sm="8">
-
-                                    {/* <select className="form-select dropsdown-width" aria-label="Default select example">
-                                        <option selected value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select> */}
                                     <select className="form-select dropsdown-width" aria-label="Default select example" value={reviewType} onChange={(e) => setReviewType(e.target.value)}>
                                         <option selected value="All">All reviews</option>
                                         <option value="Published">Published</option>

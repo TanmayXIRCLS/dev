@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, CardBody, Col, Row, Progress, CardHeader, CardTitle } from 'reactstrap'
+import { Card, CardBody, Col, Row, Progress } from 'reactstrap'
 import {
     AiOutlineMenu,
     AiFillFacebook,
@@ -8,7 +8,6 @@ import {
     AiOutlineTwitter,
     AiFillYoutube,
     AiOutlineMail,
-    AiOutlineBell
 } from "react-icons/ai"
 import { BiCopy } from "react-icons/bi"
 import { BiDollar } from "react-icons/bi"
@@ -23,8 +22,6 @@ const AffiliateDashboard = () => {
     const [affiliateLink, setAffiliateLink] = useState("https://www.xircls.com/signup/referral/147576")
     const [cardPop, setCardPop] = useState(false)
     const [copySuccess, setCopySuccess] = useState('')
-    const [productSpecific, setProductSpecific] = useState("")
-    const [pageSpecific, sePageSpecific] = useState("")
 
     const salesReport = [
         {

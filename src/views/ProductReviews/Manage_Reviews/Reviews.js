@@ -7,9 +7,13 @@ import { FiSettings, FiEdit } from "react-icons/fi"
 import { IoIosArrowDown } from "react-icons/io"
 import { VscVerifiedFilled } from "react-icons/vsc"
 import { CgProfile } from "react-icons/cg"
-import StarRating from "./StarRating"
-import "./style/ReviewStyle.css"
 
+import ColorsInput from "../components/ColorsInput"
+import NumberInput from "../components/NumberInput"
+
+import blueTick from "../../Assets/blue-tick.svg"
+import arrowUp from "../../Assets/arrow-up.svg"
+import arrowDown from "../../Assets/arrow-down.svg"
 import Star from "../../Assets/default-star.svg"
 import Heart from "../../Assets/default-heart.svg"
 import Smiley from "../../Assets/default-smiley.svg"
@@ -17,107 +21,119 @@ import blankStar from "../../Assets/blank-star.svg"
 import blankHeart from "../../Assets/blank-heart.svg"
 import blankSmiley from "../../Assets/blank-smiley.svg"
 
-import blueTick from "../../Assets/blue-tick.svg"
-import arrowUp from "../../Assets/arrow-up.svg"
-import arrowDown from "../../Assets/arrow-down.svg"
 
 import apiData from "@src/@core/auth/api/api.json"
-import ColorsInput from "../components/ColorsInput"
-import NumberInput from "../components/NumberInput"
+
+import "./style/ReviewStyle.css"
 
 const Reviews = () => {
   const initialState = { widgetTab: false, permissionTab: false, emailTab: false, emailReminderTab: false, customTab: false }
   const [openTab, setOpenTab] = useState({ ...initialState, widgetTab: true })
-  const [customStyle, setCustomStyle] = useState({ primaryColor: "#000", secondaryColor: "#fd7e97", backgroundColor: "#f3ecec", fontSize: 15, fontColor: "#000", borderColor: "#000", borderSize: 0, borderRadius: 10, defaultRating: Star, blankRating: blankStar })
+
+  const [reviewInfo, setReviewInfo] = useState({})
+
+  const [customStyle, setCustomStyle] = useState({ primaryColor: "#000", secondaryColor: "#fd7e97", backgroundColor: "#f3ecec", fontSize: 15, fontColor: "#000", borderColor: "#000", borderSize: 0, borderRadius: 10, style: "star", defaultRating: Star, blankRating: blankStar })
+
   const [styleDropDown, setStyleDropDown] = useState({ basic: true, font: true, border: true, rating: true })
+
+  const [permissionData, setPermissionData] = useState({ autoApproved: false, autoPublished: 0, anonymousLikes: false, verifiedTag: false, anonymousReviews: false, enableDislikes: false })
+
   const [rating] = useState(4)
-  const [ratings] = useState([0, 2, 4, 3, 2])
 
-  const [permissionData, setPermissionData] = useState({ autoApproved: false, autoPublished: 0, anonymousLikes: false, verifiedTag: false })
-  const [autoApproved, setAutoApproved] = useState(false)
-  const [autoPublished, setAutoPublished] = useState(0)
-  const [anonymousLikes, setAnonymousLikes] = useState(false)
+  function getDateDifference(givenDate) {
+    const givenDateTime = new Date(givenDate);
+    const currentDateTime = new Date();
+    const timeDifference = currentDateTime - givenDateTime;
 
-  // const handleRatingChange = (newRating, index) => {
-  //   const newRatings = [...ratings]
-  //   newRatings[index] = newRating
-  //   // setRatings(newRatings)
-  // }
+    // Calculate the difference in days
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    // Calculate the difference in months
+    const givenMonth = givenDateTime.getMonth() + 1; // Months are 0-based
+    const currentMonth = currentDateTime.getMonth() + 1; // Months are 0-based
+    const monthsDifference = (currentDateTime.getFullYear() - givenDateTime.getFullYear()) * 12 + (currentMonth - givenMonth);
+
+    // Calculate the difference in years
+    const yearsDifference = currentDateTime.getFullYear() - givenDateTime.getFullYear();
+
+    if (yearsDifference > 0) {
+      return yearsDifference + " years"
+    } else if (monthsDifference > 0) {
+      return monthsDifference + " months"
+    } else if (daysDifference > 1) {
+      return daysDifference + " days"
+    } else if (daysDifference === 1) {
+      return "yesterday"
+    } else {
+      return "today"
+    }
+
+  }
 
   const renderReviews = () => {
-    const reviews = [
-      {
-        name: "Rajeev Tikekar",
-        date: "Yesterday",
-        comment: "Tex Chinos"
-      },
-      {
-        name: "Shruti Jain",
-        date: "2 months ago",
-        comment: "Best Service I've ever got... keep it up"
-      },
-      {
-        name: "Sahil Modak",
-        date: "5 months ago",
-        comment: "One of the Best"
-      },
-      {
-        name: "Poorva Jain",
-        date: "8 months ago",
-        comment: "Customer service superb"
-      },
-      {
-        name: "Rajeev Tikekar",
-        date: "10 months ago",
-        comment: "Tex Chinos"
-      },
-      {
-        name: "Simon Kaur",
-        date: "12 months ago",
-        comment: "Very Bad"
+    fetch(`${apiData.d_ngrok}/router/reviews/`, {
+      method: 'GET',
+      headers: {
+        'ngrok-skip-browser-warning': true,
       }
-    ]
+    })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return resp.text()
+      })
+      .then(data => {
+        const jsonData = JSON.parse(data)
+        setReviewInfo({ ...jsonData })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    return reviewInfo?.reviews?.reverse().map((review, index) => {
+      const starImages = Array(5).fill(blankStar);
 
-    return reviews.map((review, index) => (
-      <div key={index} className="col-lg-4">
-        <Card className="CardHeight">
-          <CardBody>
-            <div className="row">
-              <div className="col-md-8 col-4 text-nowrap">
-                <CgProfile
-                  style={{
-                    fontSize: "28px",
-                    marginRight: "4px",
-                    marginBottom: "5px"
-                  }}
-                />
-                <span className="fw-bold">{review.name}</span>
-                <VscVerifiedFilled
-                  style={{
-                    color: "#4FB6EC",
-                    fontSize: "16px",
-                    marginBottom: "4px",
-                    marginLeft: "2px"
-                  }}
-                />
+      for (let i = 0; i < review?.rating; i++) {
+        starImages[i] = Star;
+      }
+      return (
+        <div key={index} className="col-lg-4">
+          <Card className="CardHeight">
+            <CardBody>
+              <div className="row">
+                <div className="col-md-8 col-4 text-nowrap">
+                  <CgProfile
+                    style={{
+                      fontSize: "28px",
+                      marginRight: "4px",
+                      marginBottom: "5px"
+                    }}
+                  />
+                  <span className="fw-bold">{review?.customer.name}</span>
+                  <VscVerifiedFilled
+                    style={{
+                      color: "#4FB6EC",
+                      fontSize: "16px",
+                      marginBottom: "4px",
+                      marginLeft: "2px"
+                    }}
+                  />
+                </div>
+                <div className="col-md-4 col-8 text-end text-nowrap">
+                  <span className="ReviewPeriod">{getDateDifference(review?.created_at)}</span>
+                </div>
               </div>
-              <div className="col-md-4 col-8 text-end text-nowrap">
-                <span className="ReviewPeriod">{review.date}</span>
+              <div className="row pt-2">
+                <div className="col-lg-6 fw-bold">{review?.review}</div>
+                <div className="col-lg-6 ">
+                  {starImages.map((src) => <img src={src} alt="star" />)}
+                </div>
               </div>
-            </div>
-            <div className="row pt-2">
-              <div className="col-lg-6 fw-bold">{review.comment}</div>
-              <div className="col-lg-6 d-flex justify-content-end">
-                <StarRating
-                  rating={ratings[index]}
-                // onRatingChange={(newRating) => handleRatingChange(newRating, index)}
-                />
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </div>
-    ))
+            </CardBody>
+          </Card>
+        </div>
+      )
+    })
   }
 
   const renderStars = () => {
@@ -145,7 +161,26 @@ const Reviews = () => {
       if (!response.ok) {
         throw new Error(`Authorization failed due to:${response.status} `);
       }
-      setPermissionData(!permissionData.autoApproved)
+      setPermissionData({ ...permissionData, autoApproved: !permissionData.autoApproved })
+    } catch (error) {
+      console.error("Authorizing error: ", error);
+    }
+
+  }
+
+  const handleAnonymousReviews = async () => {
+    try {
+      const response = await fetch(
+        `${apiData.d_ngrok}/enable-anonymous-reviews/`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Authorization failed due to:${response.status} `);
+      }
+      setPermissionData({ ...permissionData, anonymousReviews: !permissionData.anonymousReviews })
     } catch (error) {
       console.error("Authorizing error: ", error);
     }
@@ -164,11 +199,12 @@ const Reviews = () => {
       if (!response.ok) {
         throw new Error(`Authorization failed due to:${response.status} `);
       }
-      setAnonymousLikes(!anonymousLikes)
+      setPermissionData({ ...permissionData, anonymousLikes: !permissionData.anonymousLikes })
     } catch (error) {
       console.error("Authorizing error: ", error);
     }
   }
+
   const handleVerifiedTag = async () => {
     try {
       const response = await fetch(
@@ -187,9 +223,27 @@ const Reviews = () => {
     }
   }
 
+  const handleDislike = async () => {
+    try {
+      const response = await fetch(
+        `${apiData.d_ngrok}/change-dislike-status/`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Authorization failed due to:${response.status} `);
+      }
+      setPermissionData({ ...permissionData, enableDislikes: !permissionData.enableDislikes })
+    } catch (error) {
+      console.error("Authorizing error: ", error);
+    }
+  }
+
   const handleSubmit = async () => {
     const form_data = new FormData()
-    form_data.append('minimum_rating', autoPublished)
+    form_data.append('minimum_rating', permissionData.autoPublished)
     try {
       const response = await fetch(
         `${apiData.d_ngrok}/update-rating/`,
@@ -214,18 +268,21 @@ const Reviews = () => {
 
   const handleRatingStyle = (e) => {
     const selectedValue = e.target.value
-    let defaultRating, blankRating
-    if (selectedValue === 'Star') {
+    let defaultRating, blankRating, style
+    if (selectedValue === 'star') {
+      style = 'star'
       defaultRating = Star;
       blankRating = blankStar;
-    } else if (selectedValue === 'Heart') {
+    } else if (selectedValue === 'heart') {
+      style = 'heart'
       defaultRating = Heart;
       blankRating = blankHeart;
-    } else if (selectedValue === 'Smiley') {
+    } else if (selectedValue === 'smiley') {
+      style = 'smiley'
       defaultRating = Smiley;
       blankRating = blankSmiley;
     }
-    setCustomStyle({ ...customStyle, defaultRating, blankRating })
+    setCustomStyle({ ...customStyle, style, defaultRating, blankRating })
   }
 
   const submitCustomStyle = () => {
@@ -251,61 +308,59 @@ const Reviews = () => {
     }
   }
 
-  useEffect(async () => {
-    const url1 = `${apiData.d_ngrok}/router/current-status/`
-    const url2 = `${apiData.d_ngrok}/router/current-min/`
-    const url3 = `${apiData.d_ngrok}/router/anonymous-status/`
-    const url4 = `${apiData.d_ngrok}/router/card-styles/`
+  useEffect(() => {
+    async function fetchData() {
+      const url1 = `${apiData.d_ngrok}/router/review-permissions/`
+      const url2 = `${apiData.d_ngrok}/router/card-styles`
 
-    const responses = await Promise.all([
-      fetch(url1,
-        {
-          method: "GET",
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          }
-        }),
-      fetch(url2,
-        {
-          method: "GET",
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          }
-        }),
-      fetch(url3,
-        {
-          method: "GET",
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          }
-        }),
-      fetch(url4,
-        {
-          method: "GET",
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          }
-        })
-    ])
+      const responses = await Promise.all([
+        fetch(url1,
+          {
+            method: "GET",
+            headers: {
+              'ngrok-skip-browser-warning': true,
+            }
+          }),
+        fetch(url2,
+          {
+            method: "GET",
+            headers: {
+              'ngrok-skip-browser-warning': true,
+            }
+          }),
+      ])
 
-    const autoApprovedData = await responses[0].json()
-    setPermissionData({ ...permissionData, autoApproved: autoApprovedData[0].auto_approve })
+      const respPermissionData = await responses[0].json()
+      setPermissionData({ autoApproved: respPermissionData[0].auto_approve_reviews, autoPublished: respPermissionData[0].minimum_rating, anonymousLikes: respPermissionData[0].anonymous_likes, verifiedTag: respPermissionData[0].show_verified_tag, anonymousReviews: respPermissionData[0].allow_anonymous_reviews, enableDislikes: respPermissionData[0].enable_dislikes })
 
+      const customStyleData = await responses[1].json()
+      let defaultRating, blankRating
+      if (customStyleData.card_styles[0].style === 'star') {
+        defaultRating = Star;
+        blankRating = blankStar;
+      } else if (customStyleData.card_styles[0].style === 'heart') {
+        defaultRating = Heart;
+        blankRating = blankHeart;
+      } else if (customStyleData.card_styles[0].style === 'smiley') {
+        defaultRating = Smiley;
+        blankRating = blankSmiley;
+      }
 
-    const autoPublishedData = await responses[1].json()
-    setAutoPublished(autoPublishedData[0].minimum_rating)
-
-    const anonymousLikesData = await responses[2].json()
-    setAnonymousLikes(anonymousLikesData[0]["use_user_auth"])
-
-    const customStyleData = await responses[3].json()
-    console.log("customStyleData", customStyleData)
-    setCustomStyle({ primaryColor: customStyleData[0].primary_color, secondaryColor: customStyleData[0].secondary_color, backgroundColor: customStyleData[0].background_color, fontSize: customStyleData[0].font_size, fontColor: customStyleData[0].font_color, borderColor: customStyleData[0].border_color, borderSize: customStyleData[0].border_size, borderRadius: customStyleData[0].border_radius })
-
-    console.table({ autoApprovedData, autoPublishedData, anonymousLikes })
-
-
-
+      setCustomStyle({
+        primaryColor: customStyleData.card_styles[0].primary_color,
+        secondaryColor: customStyleData.card_styles[0].secondary_color,
+        backgroundColor: customStyleData.card_styles[0].background_color,
+        fontSize: customStyleData.card_styles[0].font_size,
+        fontColor: customStyleData.card_styles[0].font_color,
+        borderColor: customStyleData.card_styles[0].border_color,
+        borderSize: customStyleData.card_styles[0].border_size,
+        borderRadius: customStyleData.card_styles[0].border_radius,
+        style: customStyleData.card_styles[0].style,
+        defaultRating,
+        blankRating
+      })
+    }
+    fetchData()
   }, [])
 
   return (
@@ -318,32 +373,32 @@ const Reviews = () => {
       <div class="row d-flex justify-content-evenly ">
         <div class="col-md-12">
           <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
-            <li className={`nav-item nav-link ${openTab.widgetTab ? 'active' : ''}`} onClick={() => {
+            <li className={`nav-item nav-link pe-auto ${openTab.widgetTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, widgetTab: true })
             }} role="presentation">
 
               <BiCommentDetail style={{ fontSize: "16px" }} />Widgets
 
             </li>
-            <li class={`nav-item nav-link ${openTab.permissionTab ? 'active' : ''}`} onClick={() => {
+            <li class={`nav-item nav-link pointer-event ${openTab.permissionTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, permissionTab: true })
             }} role="presentation">
               <FiSettings style={{ fontSize: "16px" }} />Permissions
             </li>
-            <li class={`nav-item nav-link ${openTab.emailTab ? 'active' : ''}`} onClick={() => {
+            <li class={`nav-item nav-link pointer-event ${openTab.emailTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, emailTab: true })
             }} role="presentation">
 
               <TfiEmail style={{ fontSize: "16px" }} />Emails
             </li>
-            <li class={`nav-item nav-link ${openTab.emailReminderTab ? 'active' : ''}`} onClick={() => {
+            <li class={`nav-item nav-link pointer-event ${openTab.emailReminderTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, emailReminderTab: true })
             }} role="presentation">
 
               <AiOutlineClockCircle style={{ fontSize: "16px" }} />Integrations
 
             </li>
-            <li class={`nav-item nav-link ${openTab.customTab ? 'active' : ''}`} onClick={() => {
+            <li class={`nav-item nav-link pointer-event ${openTab.customTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, customTab: true })
             }} role="presentation">
               <FiEdit style={{ fontSize: "16px" }} />Custom
@@ -365,16 +420,16 @@ const Reviews = () => {
               <div className="star-rating">
                 {renderStars()}
                 <span style={{ fontSize: "12px", marginLeft: "6px", fontWeight: "500" }}>
-                  {rating} out of 5
+                  {reviewInfo?.average_rating || 0} out of 5
                 </span>
               </div>
               <div
                 className="pb-1"
                 style={{ fontSize: "12px", fontWeight: "bold", paddingTop: "4px" }}
               >
-                Based on 2 Reviews
+                Based on {reviewInfo?.total_reviews || 0} Reviews
               </div>
-              <div
+              {/* <div
                 className="HeadReview text-nowrap"
                 style={{
                   paddingTop: "5.5px",
@@ -389,14 +444,9 @@ const Reviews = () => {
                 >
                   <span className="NoSelect">Write a review</span>
                 </h4>
-              </div>
+              </div> */}
             </CardBody>
           </Card>
-          {/* <Card>
-          <CardBody>
-
-          </CardBody>
-        </Card> */}
 
           <div className="row d-grid-col justify-content-evenly" style={{ overflow: "hidden", overflowY: "auto" }}>
             {renderReviews()}
@@ -439,6 +489,10 @@ const Reviews = () => {
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
+                  onChange={() => {
+                    handleAnonymousReviews()
+                  }}
+                  checked={permissionData.anonymousReviews}
                 />
               </div>
             </div>
@@ -455,7 +509,7 @@ const Reviews = () => {
                   role="switch"
                   id="flexSwitchCheckDefault"
                   onChange={handleAnonymousLikes}
-                  checked={anonymousLikes}
+                  checked={permissionData.anonymousLikes}
                 />
               </div>
             </div>
@@ -469,23 +523,42 @@ const Reviews = () => {
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
-                  onChange={handleVerifiedTag}
+                  onChange={() => (
+                    handleVerifiedTag()
+                  )}
                   checked={permissionData.verifiedTag}
+                />
+              </div>
+            </div>
+            <div className="row d-flex text-warp text-md-nowarp ">
+              <div className="col-sm-8 col-8 d-flex justify-content-start ">
+                <h4 className="PermissionFont py-1 ">Enable dislikes</h4>
+              </div>
+              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+                <input
+                  class="tgglSize form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  onChange={() => (
+                    handleDislike()
+                  )}
+                  checked={permissionData.enableDislikes}
                 />
               </div>
             </div>
             <div className={`row d-flex ${permissionData.autoApproved ? "nonClickableDiv" : ""}`}>
               <div className="col d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1">
-                  Auto-publish reviews that are {autoPublished} stars & above
+                  Auto-publish reviews that are {permissionData.autoPublished} stars & above
                 </h4>
               </div>
               <div className="col d-flex justify-content-end p-0">
                 <select
                   className="my-1 me-1 ps-1"
                   style={{ width: "50px", height: "20px" }}
-                  onChange={(e) => setAutoPublished(e.target.value)}
-                  value={autoPublished}
+                  onChange={(e) => setPermissionData({ ...permissionData, autoPublished: e.target.value })}
+                  value={permissionData.autoPublished}
                 >
                   <option>0</option>
                   <option>1</option>
@@ -654,10 +727,10 @@ const Reviews = () => {
                   <IoIosArrowDown size={20} />
                 </div>
                 <div className={`styleDrop ${styleDropDown.rating ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
-                  <select className="form-control mb-1 mx-0 w-75" onChange={(e) => handleRatingStyle(e)}>
-                    <option className="p-1" value="Star">Star</option>
-                    <option className="p-1" value="Heart">Heart</option>
-                    <option className="p-1" value="Smiley">Smiley</option>
+                  <select className="form-control mb-1 mx-0 w-75" value={customStyle.style} onChange={(e) => handleRatingStyle(e)}>
+                    <option className="p-1" value="star">Star</option>
+                    <option className="p-1" value="heart">Heart</option>
+                    <option className="p-1" value="smiley">Smiley</option>
                   </select>
                 </div>
               </CardBody>

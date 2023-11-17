@@ -1,4 +1,4 @@
-import { BookOpen, Table, Grid, Circle, Users, Home, User, BarChart2, TrendingUp, Mail, Airplay, Activity, Eye, AtSign, Gift, Bell } from 'react-feather'
+import { Grid, Circle, Users, Home, User, BarChart2, TrendingUp, Airplay, Gift, Bell } from 'react-feather'
 
 export default [
   {
@@ -377,12 +377,6 @@ export default [
     title: 'Sample Get Started',
     icon: <Circle size={20} />,
     navLink: '/merchant/sample/get-started'
-  },
-  {
-    id: 'homepage',
-    title: 'Homepage Recommendation',
-    icon: <User size={20} />,
-    navLink: '/merchant/homepageRecommendation'
   },
   {
     id: 'mainhome',
