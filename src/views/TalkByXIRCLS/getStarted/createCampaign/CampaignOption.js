@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, CardBody, Button, Col, Row } from 'reactstrap'
+import { Card, CardBody } from 'reactstrap'
 import { AiOutlineMail, AiOutlineWhatsApp } from "react-icons/ai"
 import { MdOutlineTextsms } from "react-icons/md"
 import "./CampaignStyle.scss"
@@ -20,7 +20,6 @@ const CampaignOption = () => {
     if (campaignOptions.length === 0) {
       navigate('/merchant/analytics2')
     }
-
   }, [])
 
 
@@ -52,13 +51,13 @@ const CampaignOption = () => {
 
             {
               campaignOptions.map((item) => {
-                let isChecked =false
+                let isChecked = false
                 const isPresent = selectedOptions.filter((itm => itm.id === item.id))
                 if (isPresent.length === 1) {
                   isChecked = true
                 }
                 return (
-                  <div className={`btn col m-1 ${isChecked ? 'active' : ''} ` } onClick={() => handleClick(item.id)}>
+                  <div className={`btn col m-1 ${isChecked ? 'active' : ''} `} onClick={() => handleClick(item.id)}>
                     <h3 className='m-1'>{item.icon}</h3>
                     <h5 className='text-black'> {item.text}</h5>
                   </div>
@@ -70,10 +69,10 @@ const CampaignOption = () => {
           <div className='d-flex justify-content-end flex-wrap p-1 mt-2'>
             <Link to='/merchant/analytics2' className='btn btn-outline-primary mt-1'>Cancel</Link>
             {
-              selectedOptions.length === 0 ? <button className='btn btn-primary ms-1 mt-1' style={{opacity:"0.6", cursor: "not-allowed"}}>Create Campaign</button> 
-              : <Link to='/merchant/create-campaign/sms' className='btn btn-primary ms-1 mt-1'>Create Campaign</Link> 
+              selectedOptions.length === 0 ? <button className='btn btn-primary ms-1 mt-1' style={{ opacity: "0.6", cursor: "not-allowed" }}>Create Campaign</button>
+                : <Link to='/merchant/create-campaign/sms' className='btn btn-primary ms-1 mt-1'>Create Campaign</Link>
             }
-            
+
           </div>
         </CardBody>
       </Card>

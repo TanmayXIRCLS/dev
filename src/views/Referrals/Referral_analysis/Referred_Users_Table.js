@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { Card, Table } from "react-bootstrap"
-import { CardBody, CardHeader, CardTitle } from "reactstrap"
+import { Card } from "react-bootstrap"
+import { CardBody } from "reactstrap"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import { BiDownload } from "react-icons/bi"
 import RefTable from "./RefTable"
@@ -65,9 +65,9 @@ const Referred_Users_Table = () => {
                       }}
                     />
                     <span>Export</span>
-                      <RiArrowDropDownLine className={`${iconFlipped ? "IconIsFlipped" : "IconIsNotFlipped"}`}
-                        style={{ marginLeft: "2px", fontSize: "24px" }}
-                      />
+                    <RiArrowDropDownLine className={`${iconFlipped ? "IconIsFlipped" : "IconIsNotFlipped"}`}
+                      style={{ marginLeft: "2px", fontSize: "24px" }}
+                    />
                   </button>
                   <ul
                     class="dropdown-menu"

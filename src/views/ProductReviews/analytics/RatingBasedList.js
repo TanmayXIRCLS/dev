@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'reactstrap'
 import DataTable from 'react-data-table-component'
 
-import reviewList from "./reviews.json"
 import apiData from '@src/@core/auth/api/api.json';
 
 const RatingBasedList = () => {
@@ -37,92 +36,92 @@ const RatingBasedList = () => {
         },
     ]
 
-    const productsData2 = [
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 1',
-            totalReviews: 50,
-            avgRating: 4.5
-        },
-        {
-            productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
-            productName: 'Product 2',
-            totalReviews: 30,
-            avgRating: 4.0
-        },
-    ]
+    // const productsData2 = [
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 1',
+    //         totalReviews: 50,
+    //         avgRating: 4.5
+    //     },
+    //     {
+    //         productImage: 'https://e1.pngegg.com/pngimages/629/981/png-clipart-shop-shapes-flowers-black-5-leaf-clover.png',
+    //         productName: 'Product 2',
+    //         totalReviews: 30,
+    //         avgRating: 4.0
+    //     },
+    // ]
 
     const customStyles = {
         headRow: {

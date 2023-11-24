@@ -1,13 +1,13 @@
 // ** React Imports
-import { Fragment } from 'react'
+// import { Fragment } from 'react'
 
 // ** Third Party Components
-import ReactPaginate from 'react-paginate'
+// import ReactPaginate from 'react-paginate'
 import { ChevronDown } from 'react-feather'
 import DataTable from 'react-data-table-component'
 
 // ** Reactstrap Imports
-import { Card, Input, Row, Col } from 'reactstrap'
+import { Card } from 'reactstrap'
 
 const TableOfferLogs = (props) => {
     const { offers, handleEdit, handleDelete } = props

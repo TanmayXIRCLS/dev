@@ -20,6 +20,7 @@ import Smiley from "../../Assets/default-smiley.svg"
 import blankStar from "../../Assets/blank-star.svg"
 import blankHeart from "../../Assets/blank-heart.svg"
 import blankSmiley from "../../Assets/blank-smiley.svg"
+import reviewPic from "./chad.png"
 
 
 import apiData from "@src/@core/auth/api/api.json"
@@ -38,7 +39,7 @@ const Reviews = () => {
 
   const [permissionData, setPermissionData] = useState({ autoApproved: false, autoPublished: 0, anonymousLikes: false, verifiedTag: false, anonymousReviews: false, enableDislikes: false })
 
-  const [rating] = useState(4)
+  const [rating, setRating] = useState({ likes: 3, dislikes: 2 })
 
   function getDateDifference(givenDate) {
     const givenDateTime = new Date(givenDate);
@@ -68,85 +69,6 @@ const Reviews = () => {
       return "today"
     }
 
-  }
-
-  const renderReviews = () => {
-    fetch(`${apiData.d_ngrok}/router/reviews/`, {
-      method: 'GET',
-      headers: {
-        'ngrok-skip-browser-warning': true,
-      }
-    })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return resp.text()
-      })
-      .then(data => {
-        const jsonData = JSON.parse(data)
-        setReviewInfo({ ...jsonData })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    return reviewInfo?.reviews?.reverse().map((review, index) => {
-      const starImages = Array(5).fill(blankStar);
-
-      for (let i = 0; i < review?.rating; i++) {
-        starImages[i] = Star;
-      }
-      return (
-        <div key={index} className="col-lg-4">
-          <Card className="CardHeight">
-            <CardBody>
-              <div className="row">
-                <div className="col-md-8 col-4 text-nowrap">
-                  <CgProfile
-                    style={{
-                      fontSize: "28px",
-                      marginRight: "4px",
-                      marginBottom: "5px"
-                    }}
-                  />
-                  <span className="fw-bold">{review?.customer.name}</span>
-                  <VscVerifiedFilled
-                    style={{
-                      color: "#4FB6EC",
-                      fontSize: "16px",
-                      marginBottom: "4px",
-                      marginLeft: "2px"
-                    }}
-                  />
-                </div>
-                <div className="col-md-4 col-8 text-end text-nowrap">
-                  <span className="ReviewPeriod">{getDateDifference(review?.created_at)}</span>
-                </div>
-              </div>
-              <div className="row pt-2">
-                <div className="col-lg-6 fw-bold">{review?.review}</div>
-                <div className="col-lg-6 ">
-                  {starImages.map((src) => <img src={src} alt="star" />)}
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      )
-    })
-  }
-
-  const renderStars = () => {
-    const stars = []
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <i
-          key={i}
-          className={`fa ${i <= rating ? "fa-star" : "fa-star-o"}`}
-        ></i>
-      )
-    }
-    return stars
   }
 
   const handleAutoApproved = async () => {
@@ -287,7 +209,9 @@ const Reviews = () => {
 
   const submitCustomStyle = () => {
     const form_data = new FormData()
-    form_data.append("uid", "bb8f4c53cb0b5e19")
+    // form_data.append("uid", "bb8f4c53cb0b5e19")
+    form_data.append("shopDomain", "quickstart-6d4c5332.myshopify.com")
+    form_data.append("shop", "Quickstart (6d4c5332)")
     for (const item in customStyle) {
       form_data.append(item, customStyle[item])
     }
@@ -311,7 +235,28 @@ const Reviews = () => {
   useEffect(() => {
     async function fetchData() {
       const url1 = `${apiData.d_ngrok}/router/review-permissions/`
-      const url2 = `${apiData.d_ngrok}/router/card-styles`
+      const url2 = `${apiData.d_ngrok}/styles/`
+      const url3 = `${apiData.d_ngrok}/router/reviews/`
+
+      fetch(`${apiData.d_ngrok}/router/reviews/`, {
+        method: 'GET',
+        headers: {
+          'ngrok-skip-browser-warning': true,
+        }
+      })
+        .then((resp) => {
+          if (!resp.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return resp.text()
+        })
+        .then(data => {
+          const jsonData = JSON.parse(data)
+          setReviewInfo({ ...jsonData })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
 
       const responses = await Promise.all([
         fetch(url1,
@@ -322,6 +267,13 @@ const Reviews = () => {
             }
           }),
         fetch(url2,
+          {
+            method: "GET",
+            headers: {
+              'ngrok-skip-browser-warning': true,
+            }
+          }),
+        fetch(url3,
           {
             method: "GET",
             headers: {
@@ -359,6 +311,9 @@ const Reviews = () => {
         defaultRating,
         blankRating
       })
+
+      const reviewData = await responses[2].json()
+      setReviewInfo({ ...reviewData })
     }
     fetchData()
   }, [])
@@ -370,9 +325,9 @@ const Reviews = () => {
           <CardTitle>Manage Settings</CardTitle>
         </CardHeader>
       </Card>
-      <div class="row d-flex justify-content-evenly ">
-        <div class="col-md-12">
-          <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
+      <div className="row d-flex justify-content-evenly ">
+        <div className="col-md-12">
+          <ul className="nav nav-pills flex-column flex-sm-row" role="tablist">
             <li className={`nav-item nav-link pe-auto ${openTab.widgetTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, widgetTab: true })
             }} role="presentation">
@@ -380,25 +335,25 @@ const Reviews = () => {
               <BiCommentDetail style={{ fontSize: "16px" }} />Widgets
 
             </li>
-            <li class={`nav-item nav-link pointer-event ${openTab.permissionTab ? 'active' : ''}`} onClick={() => {
+            <li className={`nav-item nav-link pointer-event ${openTab.permissionTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, permissionTab: true })
             }} role="presentation">
               <FiSettings style={{ fontSize: "16px" }} />Permissions
             </li>
-            <li class={`nav-item nav-link pointer-event ${openTab.emailTab ? 'active' : ''}`} onClick={() => {
+            <li className={`nav-item nav-link pointer-event ${openTab.emailTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, emailTab: true })
             }} role="presentation">
 
               <TfiEmail style={{ fontSize: "16px" }} />Emails
             </li>
-            <li class={`nav-item nav-link pointer-event ${openTab.emailReminderTab ? 'active' : ''}`} onClick={() => {
+            <li className={`nav-item nav-link pointer-event ${openTab.emailReminderTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, emailReminderTab: true })
             }} role="presentation">
 
               <AiOutlineClockCircle style={{ fontSize: "16px" }} />Integrations
 
             </li>
-            <li class={`nav-item nav-link pointer-event ${openTab.customTab ? 'active' : ''}`} onClick={() => {
+            <li className={`nav-item nav-link pointer-event ${openTab.customTab ? 'active' : ''}`} onClick={() => {
               setOpenTab({ ...initialState, customTab: true })
             }} role="presentation">
               <FiEdit style={{ fontSize: "16px" }} />Custom
@@ -418,7 +373,7 @@ const Reviews = () => {
                 Customer Reviews
               </h5>
               <div className="star-rating">
-                {renderStars()}
+
                 <span style={{ fontSize: "12px", marginLeft: "6px", fontWeight: "500" }}>
                   {reviewInfo?.average_rating || 0} out of 5
                 </span>
@@ -449,7 +404,53 @@ const Reviews = () => {
           </Card>
 
           <div className="row d-grid-col justify-content-evenly" style={{ overflow: "hidden", overflowY: "auto" }}>
-            {renderReviews()}
+            {/* {renderReviews()} */}
+            {
+              reviewInfo?.reviews?.reverse().map((review, index) => {
+                const starImages = Array(5).fill(blankStar);
+
+                for (let i = 0; i < review?.rating; i++) {
+                  starImages[i] = Star;
+                }
+                return (
+                  <div key={index} className="col-lg-4">
+                    <Card className="CardHeight">
+                      <CardBody>
+                        <div className="row">
+                          <div className="col-md-8 col-4 text-nowrap">
+                            <CgProfile
+                              style={{
+                                fontSize: "28px",
+                                marginRight: "4px",
+                                marginBottom: "5px"
+                              }}
+                            />
+                            <span className="fw-bold">{review?.customer.name}</span>
+                            <VscVerifiedFilled
+                              style={{
+                                color: "#4FB6EC",
+                                fontSize: "16px",
+                                marginBottom: "4px",
+                                marginLeft: "2px"
+                              }}
+                            />
+                          </div>
+                          <div className="col-md-4 col-8 text-end text-nowrap">
+                            <span className="ReviewPeriod">{getDateDifference(review?.created_at)}</span>
+                          </div>
+                        </div>
+                        <div className="row pt-2">
+                          <div className="col-lg-6 fw-bold">{review?.review}</div>
+                          <div className="col-lg-6 ">
+                            {starImages.map((src) => <img src={src} alt="star" />)}
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </div>
+                )
+              })
+            }
           </div>
 
         </>
@@ -465,9 +466,9 @@ const Reviews = () => {
                   Auto-approve review submissions
                 </h4>
               </div>
-              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+              <div className="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
                 <input
-                  class="tgglSize form-check-input"
+                  className="tgglSize form-check-input"
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
@@ -483,9 +484,9 @@ const Reviews = () => {
               <div className="col-sm-8 col-8 d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1">Allow anonymous reviews</h4>
               </div>
-              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+              <div className="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
                 <input
-                  class="tgglSize form-check-input"
+                  className="tgglSize form-check-input"
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
@@ -502,9 +503,9 @@ const Reviews = () => {
                   Allow anonymous Likes
                 </h4>
               </div>
-              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+              <div className="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
                 <input
-                  class="tgglSize form-check-input"
+                  className="tgglSize form-check-input"
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
@@ -517,9 +518,9 @@ const Reviews = () => {
               <div className="col-sm-8 col-8 d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1 ">Display ‘Verified’ tag</h4>
               </div>
-              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+              <div className="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
                 <input
-                  class="tgglSize form-check-input"
+                  className="tgglSize form-check-input"
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
@@ -534,9 +535,9 @@ const Reviews = () => {
               <div className="col-sm-8 col-8 d-flex justify-content-start ">
                 <h4 className="PermissionFont py-1 ">Enable dislikes</h4>
               </div>
-              <div class="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
+              <div className="col-sm-4 col-4  form-check form-switch my-1 d-flex justify-content-end">
                 <input
-                  class="tgglSize form-check-input"
+                  className="tgglSize form-check-input"
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckDefault"
@@ -615,9 +616,9 @@ const Reviews = () => {
                       New review notification
                     </h4>
                   </div>
-                  <div class="col form-check form-switch my-1 ">
+                  <div className="col form-check form-switch my-1 ">
                     <input
-                      class="tgglSize form-check-input"
+                      className="tgglSize form-check-input"
                       type="checkbox"
                       role="switch"
                       id="flexSwitchCheckDefault"
@@ -639,8 +640,70 @@ const Reviews = () => {
       {/* Custom Tab */}
       {openTab.customTab && (
         <Row className="" >
-          <Col md="6">
-            <div style={{ margin: "20px", padding: "20px", color: `${customStyle.fontColor}`, backgroundColor: `${customStyle.backgroundColor}`, border: `${customStyle.borderSize}px solid ${customStyle.borderColor}`, borderRadius: `${customStyle.borderRadius}px` }}>
+          <Col md="8">
+            <div className="" style={{ width: "95%", margin: "20px", padding: "20px", color: `${customStyle.fontColor}`, backgroundColor: `${customStyle.backgroundColor}`, border: `${customStyle.borderSize}px solid ${customStyle.borderColor}`, borderRadius: `${customStyle.borderRadius}px` }}>
+              <div className="d-flex justify-content-center">
+
+                <div style={{ width: "25%" }}>
+                  <div className="d-flex align-items-center" style={{ gap: "5px" }}>
+                    <div className=" d-flex justify-content-center align-items-center" style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: `${customStyle.secondaryColor}`, color: "#FFF" }}>
+                      <span>JD</span>
+                    </div>
+                    <div>
+                      <h6 className=" m-0" style={{ fontWeight: "900", color: `${customStyle.fontColor}` }}>Rajeev Tikekar</h6>
+                      <span className="flex-between verified" style={{ gap: "5px", fontSize: "12px" }}>
+                        <img src={blueTick} alt="Blue Tick" className="blue-tick" />
+                        Verified Buyer
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div style={{ width: "70%" }}>
+                  <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "10px" }}>
+                    <div className="d-flex justify-content-start align-items-center gap-1">
+                      <img src={customStyle.defaultRating} alt="default-star" style={{ width: "20px" }} />
+                      <img src={customStyle.defaultRating} alt="default-star" style={{ width: "20px" }} />
+                      <img src={customStyle.defaultRating} alt="default-star" style={{ width: "20px" }} />
+                      <img src={customStyle.blankRating} alt="blank-star" style={{ width: "20px" }} />
+                      <img src={customStyle.blankRating} alt="blank-star" style={{ width: "20px" }} />
+                    </div>
+                    <p style={{ color: `${customStyle.fontColor}` }}>21/08/2023</p>
+                  </div>
+
+                  <p style={{ fontSize: `${customStyle.fontSize}px`, color: `${customStyle.fontColor}`, marginBottom: "10px" }}>
+                    Best Service I've ever got... keep it up Lorem ipsum dolor sit amet
+                    consectetur adipisicing elit. Dignissimos, minus iusto! Veniam atque
+                    porro ipsa nobis adipisci vel facilis, laborum quidem amet eveniet
+                    vero maiores aliquid minus ut natus? Tempore.
+                  </p>
+
+                  <div className="d-flex justify-content-between">
+                    <img src={reviewPic} alt="review" width="80" height="80" />
+
+                    <div className="d-flex justify-content-start align-items-center align-self-end">
+
+                      <button className="d-flex justify-content-start align-items-center border-0 bg-transparent px-1" onClick={() => setRating({ ...rating, likes: rating.likes + 1 })}>
+                        <img src={arrowUp} alt="arrow up" />
+                      </button>
+
+                      <p className="p-0 m-0" style={{ color: `${customStyle.fontColor}` }}>{rating.likes}</p>
+
+                      <button className="d-flex justify-content-start align-items-center border-0 bg-transparent px-1" onClick={() => setRating({ ...rating, dislikes: rating.dislikes + 1 })}>
+                        <img src={arrowDown} alt="arrow down" />
+                      </button>
+
+                      <p className="p-0 m-0" style={{ color: `${customStyle.fontColor}` }}>{rating.dislikes}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            {/* <div style={{ margin: "20px", padding: "20px", color: `${customStyle.fontColor}`, backgroundColor: `${customStyle.backgroundColor}`, border: `${customStyle.borderSize}px solid ${customStyle.borderColor}`, borderRadius: `${customStyle.borderRadius}px` }}>
               <div className=" d-flex justify-content-between align-items-center ">
                 <div className=" d-flex justify-content-center align-items-center gap-1">
                   <img src={customStyle.defaultRating} alt="star" />
@@ -653,12 +716,14 @@ const Reviews = () => {
               </div>
 
               <div className=" d-flex align-items-center" style={{ gap: "5px", marginTop: "8px", marginBottom: "20px" }}>
-                <div className=" d-flex justify-content-center align-items-center" style={{ width: "35px", height: "35px", borderRadius: "50%", backgroundColor: `${customStyle.secondaryColor}`, color: "#FFF" }}><span>JD</span></div>
+                <div className=" d-flex justify-content-center align-items-center" style={{ width: "35px", height: "35px", borderRadius: "50%", backgroundColor: `${customStyle.secondaryColor}`, color: "#FFF" }}>
+                  <span>JD</span>
+                </div>
                 <h4 className=" m-0" style={{ fontWeight: "900", color: `${customStyle.fontColor}` }}>Rajeev Tikekar</h4>
                 <img
                   src={blueTick}
                   alt="Blue Tick"
-                  class="blue-tick"
+                  className="blue-tick"
                 />
               </div>
 
@@ -683,56 +748,72 @@ const Reviews = () => {
 
                 <p>2</p>
               </div>
-            </div>
+            </div> */}
           </Col>
 
-          <Col md="6">
+          <Col md="4">
             <Card style={{ height: "60vh", overflowY: "scroll" }}>
+              {/* <Card> */}
               <CardBody className=" position-relative pt-0">
                 <div className=" bg-white d-flex justify-content-between align-items-center pt-1 mb-2 position-sticky top-0 z-1">
                   <h3>Custom Form</h3>
                   <button className=" btn btn-primary" onClick={submitCustomStyle}>Save</button>
                 </div>
-                <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, basic: !styleDropDown.basic })}>
-                  <h4 className="m-0" style={{ cursor: "pointer" }}>Basic</h4>
-                  <IoIosArrowDown size={20} />
-                </div>
-                <div className={`styleDrop ${styleDropDown.basic ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
-                  <ColorsInput title="Primary Color" name='primaryColor' value={customStyle.primaryColor} handleStyling={handleStyling} />
-                  <ColorsInput title="Secondary Color" name='secondaryColor' value={customStyle.secondaryColor} handleStyling={handleStyling} />
-                  <ColorsInput title="Background Color" name='backgroundColor' value={customStyle.backgroundColor} handleStyling={handleStyling} />
-                </div>
 
-                <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, font: !styleDropDown.font })}>
-                  <h4 className="m-0" style={{ cursor: "pointer" }}>Font</h4>
-                  <IoIosArrowDown size={20} />
-                </div>
-                <div className={`styleDrop ${styleDropDown.font ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
-                  <NumberInput title="Font Size" name='fontSize' value={customStyle.fontSize} handleStyling={handleStyling} min={10} max={20} />
-                  <ColorsInput title="Font Color" name='fontColor' value={customStyle.fontColor} handleStyling={handleStyling} />
-                </div>
+                <Row>
+                  <Col md="12">
+                    <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, basic: !styleDropDown.basic })}>
+                      <h4 className="m-0" style={{ cursor: "pointer" }}>Basic</h4>
+                      <IoIosArrowDown size={20} />
+                    </div>
+                    <div className={`styleDrop ${styleDropDown.basic ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
+                      {/* <div className={"styleDrop styleDropDown mb-4"}> */}
+                      <ColorsInput title="Primary Color" name='primaryColor' value={customStyle.primaryColor} handleStyling={handleStyling} />
+                      <ColorsInput title="Secondary Color" name='secondaryColor' value={customStyle.secondaryColor} handleStyling={handleStyling} />
+                      <ColorsInput title="Background Color" name='backgroundColor' value={customStyle.backgroundColor} handleStyling={handleStyling} />
+                    </div>
+                  </Col>
 
-                <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, border: !styleDropDown.border })}>
-                  <h4 className="m-0" style={{ cursor: "pointer" }}>Border</h4>
-                  <IoIosArrowDown size={20} />
-                </div>
-                <div className={`styleDrop ${styleDropDown.border ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
-                  <ColorsInput title="Border Color" name='borderColor' value={customStyle.borderColor} handleStyling={handleStyling} />
-                  <NumberInput title="Border Size" name='borderSize' value={customStyle.borderSize} handleStyling={handleStyling} min={0} max={10} />
-                  <NumberInput title="Border radius" name='borderRadius' value={customStyle.borderRadius} handleStyling={handleStyling} min={0} max={30} />
-                </div>
+                  <Col md="12">
+                    <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, font: !styleDropDown.font })}>
+                      <h4 className="m-0" style={{ cursor: "pointer" }}>Font</h4>
+                      <IoIosArrowDown size={20} />
+                    </div>
+                    <div className={`styleDrop ${styleDropDown.font ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
+                      {/* <div className={"styleDrop styleDropDown mb-4"}> */}
+                      <NumberInput title="Font Size" name='fontSize' value={customStyle.fontSize} handleStyling={handleStyling} min={10} max={20} />
+                      <ColorsInput title="Font Color" name='fontColor' value={customStyle.fontColor} handleStyling={handleStyling} />
+                    </div>
+                  </Col>
 
-                <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, rating: !styleDropDown.rating })}>
-                  <h4 className="m-0" style={{ cursor: "pointer" }}>Rating</h4>
-                  <IoIosArrowDown size={20} />
-                </div>
-                <div className={`styleDrop ${styleDropDown.rating ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
-                  <select className="form-control mb-1 mx-0 w-75" value={customStyle.style} onChange={(e) => handleRatingStyle(e)}>
-                    <option className="p-1" value="star">Star</option>
-                    <option className="p-1" value="heart">Heart</option>
-                    <option className="p-1" value="smiley">Smiley</option>
-                  </select>
-                </div>
+                  <Col md="12">
+                    <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, border: !styleDropDown.border })}>
+                      <h4 className="m-0" style={{ cursor: "pointer" }}>Border</h4>
+                      <IoIosArrowDown size={20} />
+                    </div>
+                    <div className={`styleDrop ${styleDropDown.border ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
+                      {/* <div className={"styleDrop styleDropDown mb-4"}> */}
+                      <ColorsInput title="Border Color" name='borderColor' value={customStyle.borderColor} handleStyling={handleStyling} />
+                      <NumberInput title="Border Size" name='borderSize' value={customStyle.borderSize} handleStyling={handleStyling} min={0} max={10} />
+                      <NumberInput title="Border radius" name='borderRadius' value={customStyle.borderRadius} handleStyling={handleStyling} min={0} max={30} />
+                    </div>
+                  </Col>
+
+                  <Col md="12">
+                    <div className=" d-flex justify-content-between align-items-center gap-1 mb-1" onClick={() => setStyleDropDown({ ...styleDropDown, rating: !styleDropDown.rating })}>
+                      <h4 className="m-0" style={{ cursor: "pointer" }}>Rating</h4>
+                      <IoIosArrowDown size={20} />
+                    </div>
+                    <div className={`styleDrop ${styleDropDown.rating ? " styleDropDown mb-4" : " styleDropUp mb-1"}`}>
+                      {/* <div className={"styleDrop styleDropDown mb-4"}> */}
+                      <select className="form-control mb-1 mx-0 w-75" value={customStyle.style} onChange={(e) => handleRatingStyle(e)}>
+                        <option className="p-1" value="star">Star</option>
+                        <option className="p-1" value="heart">Heart</option>
+                        <option className="p-1" value="smiley">Smiley</option>
+                      </select>
+                    </div>
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
 
